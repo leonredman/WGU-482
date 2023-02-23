@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="1200.0" style="-fx-background-color: #ecf9ff;" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="528.0" AnchorPane.topAnchor="380.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+   <children>
+      <AnchorPane layoutX="13.0" prefHeight="75.0" prefWidth="972.0">
+         <children>
+            <Label fx:id="TheLabel" layoutX="14.0" layoutY="50.0" text="Inventory Management System">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="25.0" layoutY="107.0" prefHeight="304.0" prefWidth="550.0" style="-fx-border-color: black; -fx-border-radius: 5px; -fx-border-width: 2px; -fx-background-color: white;">
+         <children>
+            <AnchorPane layoutY="8.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="449.0">
+               <children>
+                  <TextField fx:id="partsSearchFieldMain" alignment="CENTER_RIGHT" layoutX="247.0" layoutY="4.0" onAction="#getResultsHandler" prefHeight="23.0" prefWidth="172.0" promptText="Search by Part ID or Name" />
+                  <Label fx:id="partsTitleText" layoutX="34.0" layoutY="7.0" text="Parts" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="18.0" prefHeight="300.0" prefWidth="500.0">
+               <children>
+                  <TableView fx:id="partsTable" layoutX="-7.0" layoutY="54.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="173.0" prefWidth="530.0" style="-fx-border-color: #5B90C3; -fx-border-width: 2px; -fx-border-radius: 3px;">
+                    <columns>
+                      <TableColumn fx:id="partIdCol" maxWidth="47.0" prefWidth="47.0" style="-fx-alignment: center;" text="Part ID" />
+                      <TableColumn fx:id="partNameCol" prefWidth="200.0" style="-fx-alignment: center;" text="Part Name" />
+                       <TableColumn fx:id="partInventoryLevelCol" prefWidth="130.0" style="-fx-alignment: center;" text="Inventory Level" />
+                       <TableColumn fx:id="partPricePerUnitCol" prefWidth="150.0" style="-fx-alignment: center;" text="Price/Cost per Unit" />
+                    </columns>
+                  </TableView>
+               </children>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
+            </AnchorPane>
+            <AnchorPane layoutX="43.0" layoutY="236.0" prefHeight="34.0" prefWidth="389.0">
+               <children>
+                  <Button fx:id="removePart" layoutX="320.0" layoutY="5.0" mnemonicParsing="false" onAction="#removePartFired" text="Delete" />
+                  <Button fx:id="modifyPart" layoutX="254.0" layoutY="5.0" mnemonicParsing="false" onAction="#toModifyPart" text="Modify" />
+                  <Button fx:id="addPart" layoutX="205.0" layoutY="5.0" mnemonicParsing="false" onAction="#toSecond" text="Add" />
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="600.0" layoutY="109.0" prefHeight="300.0" prefWidth="541.0" style="-fx-border-color: black; -fx-border-radius: 5px; -fx-border-width: 2px; -fx-background-color: white;">
+         <children>
+            <AnchorPane layoutY="8.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="449.0">
+               <children>
+                  <TextField fx:id="productsSearchFieldMain" alignment="CENTER_RIGHT" layoutX="223.0" layoutY="4.0" prefHeight="25.0" prefWidth="196.0" promptText="Search by Product ID or Name" />
+                  <Label fx:id="productsTitle" layoutX="34.0" layoutY="7.0" text="Products" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="18.0" prefHeight="250.0" prefWidth="434.0">
+               <children>
+                  <TableView fx:id="productsTable" layoutY="54.0" prefHeight="173.0" prefWidth="500.0" style="-fx-border-color: #5B90C3; -fx-border-width: 2px; -fx-border-radius: 3px;">
+                     <columns>
+                        <TableColumn fx:id="productIdCol" prefWidth="65.0" style="-fx-alignment: center;" text="Product ID" />
+                        <TableColumn fx:id="productNameCol" prefWidth="200.0" style="-fx-alignment: center;" text="Product Name" />
+                        <TableColumn fx:id="productInventoryLevelCol" prefWidth="100.0" style="-fx-alignment: center;" text="Inventory Level" />
+                        <TableColumn fx:id="productPricePerUnitCol" prefWidth="130.0" style="-fx-alignment: center;" text="Price/Cost per Unit" />
+
+                     </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="40.0" layoutY="234.0" prefHeight="34.0" prefWidth="389.0">
+               <children>
+                  <Button fx:id="deleteProduct" layoutX="320.0" layoutY="5.0" mnemonicParsing="false" onAction="#deleteProductFired" text="Delete" />
+                  <Button fx:id="modifyProduct" layoutX="254.0" layoutY="5.0" mnemonicParsing="false" onAction="#toModifyProduct" text="Modify" />
+                  <Button fx:id="addProduct" layoutX="205.0" layoutY="5.0" mnemonicParsing="false" onAction="#toAddProduct" text="Add" />
+               </children>
+            </AnchorPane>
+         </children>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+      </AnchorPane>
+      <AnchorPane layoutX="27.0" layoutY="406.0" prefHeight="35.0" prefWidth="1096.0">
+         <children>
+            <Button layoutX="1007.0" layoutY="9.0" mnemonicParsing="false" onAction="#exitBtn" text="Exit" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
