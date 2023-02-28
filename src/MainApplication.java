@@ -16,6 +16,8 @@ public class MainApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
 
+
+
         addTestData();
 
         Parent root = FXMLLoader.load(MainApplication.class.getResource("/view/mainScreen.fxml"));
@@ -24,27 +26,53 @@ public class MainApplication extends Application {
         primaryStage.show();
     }
 
+//    public static int getRandom(int max) {
+//        return (int)(Math.random()*(max))+1;
+  //  }
+
+//    public static int createRandom(){
+//        Random genId = new Random();
+//        int myId = 0;
+//        for(int counter =1; counter<10; counter++) {
+//            myId = genId.nextInt(1000);
+//        }
+//        return myId;
+//
+//    }
+//        public static int createPartId() {
+//           int newPartId = 1;
+//           for (int i = 0; i < Inventory.getAllParts().size(); i++) {
+//               newPartId++;
+//           }
+//           return newPartId;
+//
+//        }
+
+
     private void addTestData (){
-        // parts
-        PowerSupply pwrSupply = new PowerSupply(1, "Power Supply EVGA", 69.99, 20, 9, 6);
+        // parts ~ passing in method getRandom() instead of id #
+        PowerSupply pwrSupply = new PowerSupply(Inventory.createId(), "Power Supply EVGA", 69.99, 20, 9, 6);
+//        PowerSupply pwrSupply = new PowerSupply(1, "Power Supply EVGA", 69.99, 20, 9, 6);
         Inventory.addPart(pwrSupply);
 
-        MotherBoard momBoard = new MotherBoard(2, "Dell Motherboard Optiplex", 54.95, 25, 5, 1);
+        MotherBoard momBoard = new MotherBoard(Inventory.createId(), "Dell Motherboard Optiplex", 54.95, 25, 5, 1);
         Inventory.addPart(momBoard);
 
-        CoolingFan coolFan = new CoolingFan(3, "CORSAIR Cooling Fan", 149.99, 40, 5,1);
+        CoolingFan coolFan = new CoolingFan(Inventory.createId(), "CORSAIR Cooling Fan", 149.99, 40, 5,1);
         Inventory.addPart(coolFan);
 
         // products
-        SmallLaptop smLaptop = new SmallLaptop(4, "Macbook Air", 1500.00,50, 9, 9, false);
+        SmallLaptop smLaptop = new SmallLaptop(Inventory.createId(), "Macbook Air", 1500,50.00, 9, 9);
         Inventory.addProduct(smLaptop);
 
-        GamingPc gamePc = new GamingPc(5, "Razor Gamer Extreme", 3500.00, 67, 5,1, true);
+        GamingPc gamePc = new GamingPc(Inventory.createId(), "Razor Gamer Extreme", 200, 1500.00, 50,1);
         Inventory.addProduct(gamePc);
 
-        DesktopPc desktopPc = new DesktopPc(6, "DELL Desktop", 2500.00, 400, 5,1, true);
+        DesktopPc desktopPc = new DesktopPc(Inventory.createId(), "DELL Desktop", 25, 4000.00, 5,1);
         Inventory.addProduct(desktopPc);
     }
+
+
 
     public static void main(String[] args) {
         launch();
