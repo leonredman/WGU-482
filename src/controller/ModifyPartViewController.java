@@ -8,6 +8,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import model.InHouse;
+import model.Inventory;
+import model.Outsourced;
 import model.Part;
 import wgu.inventoryApp.MainApplication;
 
@@ -42,11 +45,14 @@ public class ModifyPartViewController implements Initializable {
     @FXML
     private TextField partModToggleLbl;
 
+private int currentIndex = 0;
 
+public Part selectedPart;
+private int partID;
 
 
     public void toMainFromModify(ActionEvent actionEvent) throws IOException {
-
+//        private int partId;
         Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
  //     Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
       Parent root = FXMLLoader.load(MainApplication.class.getResource("/view/mainScreen.fxml"));
@@ -58,19 +64,40 @@ public class ModifyPartViewController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-
     public void sendPart(Part part) {
-        // retrieved id and converted from string to assign to label
-        partModIdLbl.setText(String.valueOf(part.getId()));
-        partModNameLbl.setText(part.getName());
-        partModInventoryLbl.setText(String.valueOf(part.getStock()));
-        partModPriceLbl.setText(String.valueOf(part.getPrice()));
-        partModMaxLbl.setText(String.valueOf(part.getMax()));
-        partModMinLbl.setText(String.valueOf(part.getMin()));
-        //partModToggleLbl.setText(String.valueOf(part.getMax()));
+//        this.selectedPart = selectedPart;
+        int PartID = Inventory.getAllParts().indexOf(selectedPart);
 
-//        if(part instanceof InHouse)
-//            partModToggleLbl.setText(((InHouse) part).getMachineId());
+        if (part instanceof InHouse) {
+            modPartInHouseYes.setSelected(true);
+            partModToggleLbl.setText(String.valueOf(((InHouse) part).getMachineId()));
+
+
+        
+//    public void sendPart(int selectedIndex,Part part) {
+        // if inHouse radio is selected (true) get data id, name, inv, price, max, min, machine id   part instanceof InHouse
+//    currentIndex = selectedIndex;
+//
+//        if (part instanceof InHouse) {
+//            modPartInHouseYes.setSelected(true);
+//           partModToggleLbl.setText(String.valueOf(((InHouse) part).getMachineId()));
+//           // partModToggleLbl.setText(String.valueOf(InHouse.getMachineId()));
+//            System.out.println(InHouse.getMachineId());
+
+        } else {
+
+            modPartOutSourcedYes.setSelected(true);
+            partModToggleLbl.setText(((Outsourced) part).getCompanyName());
+        }
+
+            // retrieved id and converted from string to assign to label
+            partModIdLbl.setText(String.valueOf(part.getId()));
+            partModNameLbl.setText(part.getName());
+            partModInventoryLbl.setText(String.valueOf(part.getStock()));
+            partModPriceLbl.setText(String.valueOf(part.getPrice()));
+            partModMaxLbl.setText(String.valueOf(part.getMax()));
+            partModMinLbl.setText(String.valueOf(part.getMin()));
+            //partModToggleLbl.setText(String.valueOf(InHouse.getMachineId()));
 
 
     }
