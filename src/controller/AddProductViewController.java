@@ -64,7 +64,7 @@ public class AddProductViewController {
         //Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
 
-        Scene scene = new Scene(root, 1000, 450);
+        Scene scene = new Scene(root, 1200, 450);
         stage.setTitle("Back To Main Screen");
         stage.setScene(scene);
         stage.show();
@@ -77,7 +77,7 @@ public class AddProductViewController {
     }
 
     public void onSaveProductBtn(ActionEvent actionEvent) throws IOException{
-         int id = Integer.parseInt(addProductIdField.getText());
+         int id = Inventory.createId();
          String name = addProductNameField.getText();
          int stock = Integer.parseInt(addProductInvField.getText());
          Double price = Double.parseDouble(addProductPriceField.getText());
@@ -92,7 +92,7 @@ public class AddProductViewController {
         //Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
 
-        Scene scene = new Scene(root, 1000, 450);
+        Scene scene = new Scene(root, 1200, 450);
         stage.setTitle("Back To Main Screen");
         stage.setScene(scene);
         stage.show();
