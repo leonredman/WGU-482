@@ -50,6 +50,7 @@ public class MainController implements Initializable {
     public TableColumn productInventoryLevelCol;
     public TableColumn productPricePerUnitCol;
 
+
     public void getResultsHandler(ActionEvent actionEvent) {
         String q = partsSearchFieldMain.getText();
 
@@ -66,7 +67,6 @@ public class MainController implements Initializable {
             // catch and ignore
         }
       }
-
         partsTable.setItems(parts);
     }
 
@@ -85,81 +85,6 @@ public class MainController implements Initializable {
         }
         return null;
     }
-
-// selectPart is the method for index
-//            int id = Integer.parseInt(q);
-//            Part part = selectPart(id);
-//            if (part != null)
-//                parts.add(part);
-
-
-    // Linear search method
-//    public boolean search(int id) {
-//        for (Part part : Inventory.getAllParts()) {
-//            if (part.getId() == id)
-//                return true;
-//        } // else
-//        return false;
-//    }
-
-/*
-    // Searching for an existing object
-    public boolean update(int id, Part part1) {
-        int index = -1;                     // index starts at -1 so first time it runs we get index of zero
-        for(Part part: Inventory.getAllParts())
-        {
-            index ++;
-
-            if(part.getId() == id) {
-                Inventory.getAllParts().set(index, part1);
-                return true;
-            }
-        }
-        return false;
-    }
-
-
- */
-
-    // Remove method
-//    public boolean delete(int id) {
-//        for(Part part: Inventory.getAllParts()) {
-//            if(part.getId() == id)              // check if id's match
-//                return Inventory.getAllParts().remove(part);
-//        }
-//        return false;
-//    }
-
-
-    // Define select method this searches by id number only
-//    public Part selectPart(int id) {
-//        for(Part part : Inventory.getAllParts()){
-//            if(part.getId() == id)
-//                return part;
-//        }
-//        return null;
-//    }
-
-/*
-
-    // Our filter Method to search all parts
-    public ObservableList<Part> filter (String name) {            // scans through list and checks if contains any text passed. If true add it to filtered list
-        // clear filter
-        if(!(Inventory.getAllFilteredParts().isEmpty()))        // checks if list is not empty then we have filtered already
-            Inventory.getAllFilteredParts().clear();            // takes out everything in list
-
-        for(Part part: Inventory.getAllParts()) {
-            if(part.getName().contains(name))
-                Inventory.getAllFilteredParts().add(part);      // returns filtered list
-        }
-
-        if(Inventory.getAllFilteredParts().isEmpty())           // if empty return original list or filtered parts list
-            return Inventory.getAllParts();
-        else
-        return Inventory.getAllFilteredParts();
-    }
-
- */
 
 
     // try this filter instead
@@ -184,12 +109,7 @@ public class MainController implements Initializable {
         // Associate lists with table
         productsTable.setItems(Inventory.getAllProducts());
 
-
-        // To test filter - comment out line 135 ~ setItems(Inventory.allParts) temporarily and uncomment line 136
-
         partsTable.setItems(Inventory.getAllParts());
-       // partsTable.setItems(filter("Z"));
-
 
 
         // Associate / bind columns with table
@@ -203,40 +123,7 @@ public class MainController implements Initializable {
         partInventoryLevelCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
         partPricePerUnitCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-
-
-
-        // TEST CALL of linear search in initialize method
-    /*
-        if(search(3))
-            System.out.println("match found");
-        else
-            System.out.println("No match found");
-    */
-
-
-        // Test data for update method
-    /*
-        if (update(55, new InHouse(3, "Razor Cooling Fan GX99", 199.99, 20, 1, 1)))
-            System.out.println("Update Successful");
-        else
-            System.out.println("Update Failed");
-
-
-        // Test delete
-
-        if (delete(3))
-        System.out.println("delete successful");
-        else System.out.println("No Match");
-    */
-
-
-        // This call select method with test id passed in of 3 this is how to select based on id
-        // partsTable.getSelectionModel().select(selectPart(6));
-
-
     }
-
 
 
     @FXML
@@ -254,24 +141,11 @@ public class MainController implements Initializable {
         allParts = partsTable.getItems();
         selectedRows = partsTable.getSelectionModel().getSelectedItems();
         for (Part part : selectedRows) {
-            allParts.remove(part);
+           allParts.remove(part);
+            System.out.println("delete successful");
         }
-    /*  welcomeText.setText("Delete Part Fired Leon!");
-        TheLabel.setText("You clicked the Delete Part button, Total Number of clicks is: " + partCount++);
-
-        Sample code for delete
-        if (partsTable.getSelectionModel().isEmpty()) {
-            int selectedPart = partsTable.getSelectionModel().getSelectedIndex();
-            partsTable.getItems().remove(selectedPart);
-        }
-   */
     }
 
-
-    public void addProductFired(ActionEvent actionEvent) {
-        System.out.println("Add Product Fired");
-        TheLabel.setText("You clicked the Add Product button, Total Number of clicks is: " + productCount++);
-    }
 
     public void modifyProductFired(ActionEvent actionEvent) {
         System.out.println("Product Modify Fired");
@@ -289,8 +163,9 @@ public class MainController implements Initializable {
         }
     }
 
+
     // From main to 'add Part'
-    public void toSecond(ActionEvent actionEvent) throws IOException {
+    public void addPart(ActionEvent actionEvent) throws IOException {
         // Parent root = FXMLLoader.load(HelloApplication.class.getResource("/main/resources/wgu/firstscreen/addPart.fxml "));
         Parent root = FXMLLoader.load(getClass().getResource("/view/addPart.fxml"));
 
@@ -301,19 +176,19 @@ public class MainController implements Initializable {
         stage.setTitle("Add Part Screen");
         stage.setScene(scene);
         stage.show();
-
     }
 
+
     // From main to 'add Product'
-    public void toAddProduct(ActionEvent actionEvent) throws IOException {
+    public void addProduct(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(MainApplication.class.getResource("/view/addProduct.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setTitle("Add Product Screen");
         stage.setScene(scene);
         stage.show();
-
     }
+
 
     // From main to 'modifyPart HANDLER'
     public void toModifyPart(ActionEvent actionEvent) throws IOException {
@@ -359,7 +234,6 @@ public class MainController implements Initializable {
         stage.setTitle("Modify Part Screen");
         stage.setScene(scene);
         stage.show();
-
     */
     }
 
@@ -378,4 +252,7 @@ public class MainController implements Initializable {
     }
 
 
+    public void getProductResultsHandler(ActionEvent actionEvent) {
+        // todo
+    }
 }

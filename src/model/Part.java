@@ -1,11 +1,11 @@
 package model;
 
 // Notes: part is an abstract class like Fruit
+// had issue with trying to instantiate and add a part
 
- // public abstract class Part {
+   public abstract class Part {
 
-   public  class Part {        // made this not abstract so addPart could write?? otherwise we get an error?
-
+    // instance attributes
     private int id;
     private String name;
     private double price;
@@ -15,7 +15,7 @@ package model;
 
 // constructor
     public Part(int id, String name, double price, int stock, int min, int max) {
-        this.id = id;
+        this.id = Inventory.nextId;
         this.name = name;
         this.price = price;
         this.stock = stock;
@@ -23,7 +23,7 @@ package model;
         this.max = max;
     }
 
-    // Getters and Setters
+     // Getters and Setters
     public int getId() {
         return id;
     }
@@ -72,15 +72,5 @@ package model;
         this.max = max;
     }
 
-//
-//      public class createNewPart extends Part {
-//
-//          public createNewPart(int id, String name, double price, int stock, int min, int max) {
-//              super(id, name, price, stock, min, max);
-//          }
-//
-//
-//
-//      }
 
 }
