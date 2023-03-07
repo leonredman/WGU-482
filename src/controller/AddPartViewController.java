@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.InHouse;
 import model.Inventory;
+import model.Outsourced;
 import wgu.inventoryApp.MainApplication;
 
 import java.io.IOException;
@@ -41,11 +42,10 @@ public class AddPartViewController {
 
        Parent root = FXMLLoader.load(MainApplication.class.getResource("/view/mainScreen.fxml"));
        Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
-
-        Scene scene = new Scene(root, 1200, 450);
-        stage.setTitle("Back To Main Screen");
-        stage.setScene(scene);
-        stage.show();
+       Scene scene = new Scene(root, 1200, 450);
+       stage.setTitle("Back To Main Screen");
+       stage.setScene(scene);
+       stage.show();
     }
 
     public void onFirst(ActionEvent actionEvent) {
@@ -57,25 +57,38 @@ public class AddPartViewController {
     }
 
     public void onActionSavePart(ActionEvent actionEvent) throws IOException {
+
+        int machineId = 0;
+
         int id = Inventory.createId();
         String name = partNameTxt.getText();
         double price = Double.parseDouble(partStockTxt.getText());  // using wrapper class to convert input field string to int
         int stock = Integer.parseInt(partStockTxt.getText());
-        int min = Integer.parseInt(partInventoryMinTxt.getText());;
-        int max= Integer.parseInt(partInventoryMaxTxt.getText());;
-        int toggle = Integer.parseInt(partToggleIdTxt.getText());
-        boolean isInHouse;
+        int min = Integer.parseInt(partInventoryMinTxt.getText());
+        int max= Integer.parseInt(partInventoryMaxTxt.getText());
 
-        if(addPartInHouseYes.isSelected())
-            isInHouse = true;
-        else
-            isInHouse = false;
+        if(addPartInHouseYes.isSelected()) {
+            machineId = Integer.parseInt(partToggleIdTxt.getText());
+            System.out.println(machineId);   // for debugging
+            InHouse addPart = new InHouse(id, name, price, stock, min, max, machineId);
+            System.out.println(machineId);
+            Inventory.addPart(addPart);
+        }
+
+        else {
+            String companyName = partToggleIdTxt.getText();
+            Outsourced addPart = new Outsourced(id,name, price, stock, min, max, companyName );
+            System.out.println(companyName);
+            Inventory.addPart(addPart);
+
+        }
+           // isInHouse = false;
 
         // had error here, was trying to instantiate an abstract class Part instead of inHouse which extends part
 
 
-        InHouse addPart = new InHouse(id, name, price, stock, min, max);
-        Inventory.addPart(addPart);
+        //InHouse addPart = new InHouse(id, name, price, stock, min, max, int machineId);
+//        Inventory.addPart(addPart);
 
         // alternate method to use Node instead of Button
         // Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
