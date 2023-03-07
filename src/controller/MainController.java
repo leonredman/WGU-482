@@ -70,6 +70,35 @@ public class MainController implements Initializable {
         partsTable.setItems(parts);
     }
 
+    public void getProductResultsHandler(ActionEvent actionEvent) {
+        // todo
+    }
+
+//    private Product getProductsWithID (int id) {
+//    public ObservableList<Product> searchByProductName = (String partialName) {
+//        ObservableList<Product> namedProducts = FXCollections.observableArrayList();
+//        ObservableList<Product> allProducts = Product.getName();
+//
+//        for(Product: prod : allProducts)
+//            if(prod.getName)
+//
+//        return namedProducts;
+//        };
+
+
+
+    private Product getProductsWithID (int id){
+        ObservableList<Product> allProducts = Inventory.getAllProducts();
+
+        // Enhanced loop option
+        for(Product product: allProducts){
+            if (product.getId() == id) {
+                return product;
+            }
+        }
+        return null;
+    }
+
 
     private Part getPartsWithID (int id){
         ObservableList<Part> allParts = Inventory.getAllParts();
@@ -87,7 +116,7 @@ public class MainController implements Initializable {
     }
 
 
-    // try this filter instead
+    // Using this filter instead
     private ObservableList<Part> filter (String partialName) {
         ObservableList<Part> namedParts = FXCollections.observableArrayList();
 
@@ -102,6 +131,9 @@ public class MainController implements Initializable {
     }
 
 
+
+
+
         @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("I am initialized");
@@ -109,7 +141,9 @@ public class MainController implements Initializable {
         // Associate lists with table
         productsTable.setItems(Inventory.getAllProducts());
 
+
         partsTable.setItems(Inventory.getAllParts());
+            System.out.println(partsTable.getItems());
 
 
         // Associate / bind columns with table
@@ -122,6 +156,8 @@ public class MainController implements Initializable {
         partNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         partInventoryLevelCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
         partPricePerUnitCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+
 
     }
 
@@ -205,13 +241,15 @@ public class MainController implements Initializable {
 
         ModifyPartViewController MPVController = loader.getController();
    //   MPVController.sendPart(partsTable.getSelectionModel().getSelectedItem());        // shows error must be cast?
-        MPVController.sendPart((Part) partsTable.getSelectionModel().getSelectedItem());
+       MPVController.sendPart((Part) partsTable.getSelectionModel().getSelectedItem());
+       // MPVController.sendPart(partsTable.getSelectionModel().getSelectedIndex(),(Part)partsTable.getSelectionModel().getSelectedItem());
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Parent scene = loader.getRoot();
         stage.setTitle("Modify Part Screen");
         stage.setScene(new Scene(scene));
         stage.show();
+
 
         // ORIGINAL FUNCTION TO GO FROM MAIN TO MODIFY PART SCREEN
     /*
@@ -225,7 +263,6 @@ public class MainController implements Initializable {
         stage.showAndWait();
     */
 
-
     /*
         ORIGINAL FUNCTION TO GO FROM MAIN TO MODIFY PART SCREEN
         Parent root = FXMLLoader.load(MainApplication.class.getResource("/view/modifyPart.fxml"));
@@ -236,7 +273,7 @@ public class MainController implements Initializable {
         stage.show();
     */
     }
-
+/*
     // From main to modifyProduct
     public void toModifyProduct(ActionEvent actionEvent) throws IOException{
         Parent root = FXMLLoader.load(MainApplication.class.getResource("/view/modifyProduct.fxml"));
@@ -247,12 +284,32 @@ public class MainController implements Initializable {
         stage.show();
     }
 
+ */
+
+
+// From main to modifyProduct
+public void toModifyProduct(ActionEvent actionEvent) throws IOException{
+    FXMLLoader loader = new FXMLLoader() ;
+  //  Parent root = FXMLLoader.load(MainApplication.class.getResource("/view/modifyProduct.fxml"));
+    loader.setLocation((getClass().getResource("/view/modifyProduct.fxml")));
+    loader.load();
+
+    ModifyProductViewController MPRVController = loader.getController();
+
+    MPRVController.sendProduct((Product)productsTable.getSelectionModel().getSelectedItem());
+
+    Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+   // Scene scene = new Scene(root);
+    Parent scene = loader.getRoot();
+    stage.setTitle("Modify Product Screen");
+    stage.setScene(new Scene(scene));
+    stage.show();
+}
+
     public void exitBtn(ActionEvent actionEvent) {
         System.exit(0);
     }
 
 
-    public void getProductResultsHandler(ActionEvent actionEvent) {
-        // todo
-    }
+
 }
