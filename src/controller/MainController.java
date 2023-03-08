@@ -42,15 +42,14 @@ public class MainController implements Initializable {
     public TableColumn partNameCol;
     public TableColumn partInventoryLevelCol;
     public TableColumn partPricePerUnitCol;
-
-
+    
     public TableView productsTable;
     public TableColumn productIdCol;
     public TableColumn productNameCol;
     public TableColumn productInventoryLevelCol;
     public TableColumn productPricePerUnitCol;
 
-
+    // Parts search results handler
     public void getResultsHandler(ActionEvent actionEvent) {
         String q = partsSearchFieldMain.getText();
 
@@ -70,26 +69,45 @@ public class MainController implements Initializable {
         partsTable.setItems(parts);
     }
 
+
+    // Products Search field Get Results handler
     public void getProductResultsHandler(ActionEvent actionEvent) {
-        // todo
+        String prq = productsSearchFieldMain.getText();
+
+        ObservableList<Product> products = productFilter(prq);
+
+        if (products.size() == 0) {
+            try {
+                int id = Integer.parseInt(prq);
+                Product product = getProductsWithID(id);
+                if (product != null)
+                    products.add(product);
+            }
+            catch (NumberFormatException e){
+                // catch and ignore
+            }
+        }
+        productsTable.setItems(products);
     }
 
-//    private Product getProductsWithID (int id) {
-//    public ObservableList<Product> searchByProductName = (String partialName) {
-//        ObservableList<Product> namedProducts = FXCollections.observableArrayList();
-//        ObservableList<Product> allProducts = Product.getName();
-//
-//        for(Product: prod : allProducts)
-//            if(prod.getName)
-//
-//        return namedProducts;
-//        };
+    
+    // Product Search Filter Using Partial Name
+        private ObservableList<Product> productFilter (String partialProdName){
+            ObservableList<Product> namedProducts = FXCollections.observableArrayList();
+            ObservableList<Product> allProducts = Inventory.getAllProducts();
 
+            for (Product product: allProducts) {
+                if (product.getName().contains(partialProdName)) {
+                    namedProducts.add(product);
+                }
+            }
+                    return namedProducts;
+        }
 
-
+        
+    // Products Search Filter by id
     private Product getProductsWithID (int id){
         ObservableList<Product> allProducts = Inventory.getAllProducts();
-
         // Enhanced loop option
         for(Product product: allProducts){
             if (product.getId() == id) {
@@ -99,14 +117,11 @@ public class MainController implements Initializable {
         return null;
     }
 
-
+    
+    // Parts Search Filter by id
     private Part getPartsWithID (int id){
         ObservableList<Part> allParts = Inventory.getAllParts();
-    //basic index loop option
-     //   for (int i = 0; i < allParts.size(); i++) {
-      //      Part part = allParts.get(i);
-
-        // Enhanced loop option
+           // Enhanced loop option
         for(Part part: allParts){
             if (part.getId() == id) {
                 return part;
@@ -116,10 +131,9 @@ public class MainController implements Initializable {
     }
 
 
-    // Using this filter instead
+    // Parts Search Filter Using  Partial Name  with this filter instead
     private ObservableList<Part> filter (String partialName) {
         ObservableList<Part> namedParts = FXCollections.observableArrayList();
-
         ObservableList<Part> allParts = Inventory.getAllParts();
 
         for(Part part: allParts) {
@@ -129,9 +143,6 @@ public class MainController implements Initializable {
         }
         return namedParts;
     }
-
-
-
 
 
         @Override
@@ -156,9 +167,7 @@ public class MainController implements Initializable {
         partNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         partInventoryLevelCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
         partPricePerUnitCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-
-
-
+        
     }
 
 
@@ -169,6 +178,7 @@ public class MainController implements Initializable {
         TheLabel.setText("You clicked the Modify Part button, Total Number of clicks is: " + partCount++);
     }
 
+    
     @FXML
     protected void removePartFired() {
         System.out.println("Part Delete Fired");
@@ -188,6 +198,7 @@ public class MainController implements Initializable {
         TheLabel.setText("You clicked the Modify Product button, Total Number of clicks is: " + productCount++);
     }
 
+    
     public void deleteProductFired(ActionEvent actionEvent) {
         System.out.println("Product Delete Fired");
 
@@ -249,30 +260,9 @@ public class MainController implements Initializable {
         stage.setTitle("Modify Part Screen");
         stage.setScene(new Scene(scene));
         stage.show();
-
-
-        // ORIGINAL FUNCTION TO GO FROM MAIN TO MODIFY PART SCREEN
-    /*
-        public void toModifyPart(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(MainApplication.class.getResource("/view/modifyPart.fxml"));
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Parent scene = loader.getRoot();
-        stage.setScene(new Scene(scene));
-        stage.setTitle("Modify Part Screen");
-        stage.setScene(scene);
-        stage.showAndWait();
-    */
-
-    /*
-        ORIGINAL FUNCTION TO GO FROM MAIN TO MODIFY PART SCREEN
-        Parent root = FXMLLoader.load(MainApplication.class.getResource("/view/modifyPart.fxml"));
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setTitle("Modify Part Screen");
-        stage.setScene(scene);
-        stage.show();
-    */
     }
+
+
 /*
     // From main to modifyProduct
     public void toModifyProduct(ActionEvent actionEvent) throws IOException{
@@ -283,14 +273,13 @@ public class MainController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-
  */
 
 
-// From main to modifyProduct
-public void toModifyProduct(ActionEvent actionEvent) throws IOException{
-    FXMLLoader loader = new FXMLLoader() ;
-  //  Parent root = FXMLLoader.load(MainApplication.class.getResource("/view/modifyProduct.fxml"));
+    // From main to modifyProduct
+    public void toModifyProduct(ActionEvent actionEvent) throws IOException{
+        FXMLLoader loader = new FXMLLoader() ;
+    //  Parent root = FXMLLoader.load(MainApplication.class.getResource("/view/modifyProduct.fxml"));
     loader.setLocation((getClass().getResource("/view/modifyProduct.fxml")));
     loader.load();
 
@@ -299,17 +288,15 @@ public void toModifyProduct(ActionEvent actionEvent) throws IOException{
     MPRVController.sendProduct((Product)productsTable.getSelectionModel().getSelectedItem());
 
     Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-   // Scene scene = new Scene(root);
+    // Scene scene = new Scene(root);
     Parent scene = loader.getRoot();
     stage.setTitle("Modify Product Screen");
     stage.setScene(new Scene(scene));
     stage.show();
 }
 
+
     public void exitBtn(ActionEvent actionEvent) {
         System.exit(0);
     }
-
-
-
 }
