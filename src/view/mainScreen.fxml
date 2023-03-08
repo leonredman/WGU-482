@@ -18,12 +18,6 @@
       </AnchorPane>
       <AnchorPane layoutX="25.0" layoutY="107.0" prefHeight="304.0" prefWidth="550.0" style="-fx-border-color: black; -fx-border-radius: 5px; -fx-border-width: 2px; -fx-background-color: white;">
          <children>
-            <AnchorPane layoutY="8.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="449.0">
-               <children>
-                  <TextField fx:id="partsSearchFieldMain" alignment="CENTER_RIGHT" layoutX="247.0" layoutY="4.0" onAction="#getResultsHandler" prefHeight="23.0" prefWidth="172.0" promptText="Search by Part ID or Name" />
-                  <Label fx:id="partsTitleText" layoutX="34.0" layoutY="7.0" text="Parts" />
-               </children>
-            </AnchorPane>
             <AnchorPane layoutX="18.0" prefHeight="300.0" prefWidth="500.0">
                <children>
                   <TableView fx:id="partsTable" layoutX="-7.0" layoutY="54.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="173.0" prefWidth="530.0" style="-fx-border-color: #5B90C3; -fx-border-width: 2px; -fx-border-radius: 3px;">
@@ -34,6 +28,7 @@
                        <TableColumn fx:id="partPricePerUnitCol" prefWidth="150.0" style="-fx-alignment: center;" text="Price/Cost per Unit" />
                     </columns>
                   </TableView>
+                  <Button layoutX="439.0" layoutY="14.0" mnemonicParsing="false" text="Button" />
                </children>
                <padding>
                   <Insets right="10.0" />
@@ -43,19 +38,19 @@
                <children>
                   <Button fx:id="removePart" layoutX="320.0" layoutY="5.0" mnemonicParsing="false" onAction="#removePartFired" text="Delete" />
                   <Button fx:id="modifyPart" layoutX="254.0" layoutY="5.0" mnemonicParsing="false" onAction="#toModifyPart" text="Modify" />
-                  <Button fx:id="addPart" layoutX="205.0" layoutY="5.0" mnemonicParsing="false" onAction="#toSecond" text="Add" />
+                  <Button fx:id="addPart" layoutX="205.0" layoutY="5.0" mnemonicParsing="false" onAction="#addPart" text="Add" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutY="8.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="481.0">
+               <children>
+                  <Label fx:id="partsTitleText" layoutX="34.0" layoutY="7.0" text="Parts" />
+                  <TextField fx:id="partsSearchFieldMain" alignment="CENTER_RIGHT" layoutX="247.0" layoutY="4.0" onAction="#getResultsHandler" prefHeight="23.0" prefWidth="172.0" promptText="Search by Part ID or Name" />
                </children>
             </AnchorPane>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="600.0" layoutY="109.0" prefHeight="300.0" prefWidth="541.0" style="-fx-border-color: black; -fx-border-radius: 5px; -fx-border-width: 2px; -fx-background-color: white;">
          <children>
-            <AnchorPane layoutY="8.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="449.0">
-               <children>
-                  <TextField fx:id="productsSearchFieldMain" alignment="CENTER_RIGHT" layoutX="223.0" layoutY="4.0" prefHeight="25.0" prefWidth="196.0" promptText="Search by Product ID or Name" />
-                  <Label fx:id="productsTitle" layoutX="34.0" layoutY="7.0" text="Products" />
-               </children>
-            </AnchorPane>
             <AnchorPane layoutX="18.0" prefHeight="250.0" prefWidth="434.0">
                <children>
                   <TableView fx:id="productsTable" layoutY="54.0" prefHeight="173.0" prefWidth="500.0" style="-fx-border-color: #5B90C3; -fx-border-width: 2px; -fx-border-radius: 3px;">
@@ -73,7 +68,13 @@
                <children>
                   <Button fx:id="deleteProduct" layoutX="320.0" layoutY="5.0" mnemonicParsing="false" onAction="#deleteProductFired" text="Delete" />
                   <Button fx:id="modifyProduct" layoutX="254.0" layoutY="5.0" mnemonicParsing="false" onAction="#toModifyProduct" text="Modify" />
-                  <Button fx:id="addProduct" layoutX="205.0" layoutY="5.0" mnemonicParsing="false" onAction="#toAddProduct" text="Add" />
+                  <Button fx:id="addProduct" layoutX="205.0" layoutY="5.0" mnemonicParsing="false" onAction="#addProduct" text="Add" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutY="8.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="449.0">
+               <children>
+                  <Label fx:id="productsTitle" layoutX="34.0" layoutY="7.0" text="Products" />
+                  <TextField fx:id="productsSearchFieldMain" alignment="CENTER_RIGHT" layoutX="223.0" layoutY="4.0" onAction="#getProductResultsHandler" prefHeight="25.0" prefWidth="196.0" promptText="Search by Product ID or Name" />
                </children>
             </AnchorPane>
          </children>
