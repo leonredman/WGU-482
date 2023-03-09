@@ -22,6 +22,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
+
     private int partCount = 1;
     private int productCount = 1;
 
@@ -42,12 +43,13 @@ public class MainController implements Initializable {
     public TableColumn partNameCol;
     public TableColumn partInventoryLevelCol;
     public TableColumn partPricePerUnitCol;
-    
+
     public TableView productsTable;
     public TableColumn productIdCol;
     public TableColumn productNameCol;
     public TableColumn productInventoryLevelCol;
     public TableColumn productPricePerUnitCol;
+
 
     // Parts search results handler
     public void getResultsHandler(ActionEvent actionEvent) {
@@ -90,7 +92,7 @@ public class MainController implements Initializable {
         productsTable.setItems(products);
     }
 
-    
+
     // Product Search Filter Using Partial Name
         private ObservableList<Product> productFilter (String partialProdName){
             ObservableList<Product> namedProducts = FXCollections.observableArrayList();
@@ -104,7 +106,7 @@ public class MainController implements Initializable {
                     return namedProducts;
         }
 
-        
+
     // Products Search Filter by id
     private Product getProductsWithID (int id){
         ObservableList<Product> allProducts = Inventory.getAllProducts();
@@ -117,7 +119,7 @@ public class MainController implements Initializable {
         return null;
     }
 
-    
+
     // Parts Search Filter by id
     private Part getPartsWithID (int id){
         ObservableList<Part> allParts = Inventory.getAllParts();
@@ -145,7 +147,7 @@ public class MainController implements Initializable {
     }
 
 
-        @Override
+    @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("I am initialized");
 
@@ -167,7 +169,6 @@ public class MainController implements Initializable {
         partNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         partInventoryLevelCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
         partPricePerUnitCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-        
     }
 
 
@@ -178,7 +179,7 @@ public class MainController implements Initializable {
         TheLabel.setText("You clicked the Modify Part button, Total Number of clicks is: " + partCount++);
     }
 
-    
+
     @FXML
     protected void removePartFired() {
         System.out.println("Part Delete Fired");
@@ -198,7 +199,7 @@ public class MainController implements Initializable {
         TheLabel.setText("You clicked the Modify Product button, Total Number of clicks is: " + productCount++);
     }
 
-    
+
     public void deleteProductFired(ActionEvent actionEvent) {
         System.out.println("Product Delete Fired");
 
@@ -263,19 +264,6 @@ public class MainController implements Initializable {
     }
 
 
-/*
-    // From main to modifyProduct
-    public void toModifyProduct(ActionEvent actionEvent) throws IOException{
-        Parent root = FXMLLoader.load(MainApplication.class.getResource("/view/modifyProduct.fxml"));
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setTitle("Modify Product Screen");
-        stage.setScene(scene);
-        stage.show();
-    }
- */
-
-
     // From main to modifyProduct
     public void toModifyProduct(ActionEvent actionEvent) throws IOException{
         FXMLLoader loader = new FXMLLoader() ;
@@ -299,4 +287,6 @@ public class MainController implements Initializable {
     public void exitBtn(ActionEvent actionEvent) {
         System.exit(0);
     }
+
+
 }
