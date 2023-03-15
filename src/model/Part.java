@@ -15,7 +15,9 @@ package model;
 
 // constructor
     public Part(int id, String name, double price, int stock, int min, int max) {
-        this.id = Inventory.nextId;
+
+     // this.id = Inventory.nextId;   // fixed  bug here was making the update use the next id instead of the selected index id
+        this.id = id;
         this.name = name;
         this.price = price;
         this.stock = stock;
@@ -71,6 +73,4 @@ package model;
     public void setMax(int max) {
         this.max = max;
     }
-
-
 }
