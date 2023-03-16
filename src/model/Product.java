@@ -11,13 +11,13 @@ public class Product {
     private int max;
     private int min;
 
-
     public static ObservableList<Part> associatedParts = FXCollections.observableArrayList();
 
 
     public Product(int id, String name, int stock, double price, int min, int max) {
 
-        this.id = Inventory.nextId;
+     // this.id = Inventory.nextId;
+        this.id = id;
         this.name = name;
         this.stock = stock;
         this.price = price;
@@ -79,17 +79,19 @@ public class Product {
     //     this.associated = associated;
     //  }
 
+    // add a part to the list
     public void addAssociatedPart(Part part) {
-        //todo
+        associatedParts.add(part);
     }
 
     public boolean deleteAssociatedPart(Part selectedAssociatedPart) {
-        // todo
+        associatedParts.remove(selectedAssociatedPart);
+
         return true;
     }
 
     public ObservableList<Part> getAllAssociatedParts() {
-        // todo
-        return null ;
+
+        return associatedParts;
     }
 }
