@@ -65,6 +65,7 @@ public class ModifyProductViewController implements Initializable {
 
     private int currentIndex = 0;
 
+    
     // Cancel Button
     public void toMainFromModifyProduct(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(MainApplication.class.getResource("/view/mainScreen.fxml"));
@@ -77,6 +78,7 @@ public class ModifyProductViewController implements Initializable {
         stage.show();
     }
 
+    
     // Sets text to Product Update fields
     public void sendProduct(int selectedIndex, Product product) {
 
@@ -115,6 +117,7 @@ public class ModifyProductViewController implements Initializable {
         modAssocProdPartPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
 
+    
     // Add part to associated parts list
     public void addModifiedAssocPart(ActionEvent actionEvent) {
 
@@ -133,6 +136,7 @@ public class ModifyProductViewController implements Initializable {
         }
     }
 
+    
     public void saveModifiedAssocPart(ActionEvent actionEvent) throws IOException {
 
         int id = Integer.parseInt(prodModIdLbl.getText());
@@ -170,6 +174,7 @@ public class ModifyProductViewController implements Initializable {
         stage.show();
     }
 
+    
     public void toRemoveAssociatedPart(ActionEvent actionEvent) {
         Part selectedPart = (Part) modAssociatedPartsTable.getSelectionModel().getSelectedItem();
 
@@ -186,6 +191,7 @@ public class ModifyProductViewController implements Initializable {
         }
     }
 
+    
     public void onModProductPartSearch(ActionEvent actionEvent) {
 
         String q = modProductSearch.getText();
@@ -206,8 +212,7 @@ public class ModifyProductViewController implements Initializable {
         modifyProductPartsTable.setItems(parts);
     }
 
-
-
+    
     // Mod Products Parts Search Filter by id
     private Part modProductsSearchPartsWithID (int id){
         ObservableList<Part> allParts = Inventory.getAllParts();
@@ -220,6 +225,7 @@ public class ModifyProductViewController implements Initializable {
         return null;
     }
 
+    
     // ModProducts Parts Search Filter Using  Partial Name  with this filter instead
     private ObservableList<Part> filter (String partialName) {
         ObservableList<Part> namedParts = FXCollections.observableArrayList();
