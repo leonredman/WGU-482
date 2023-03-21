@@ -1,9 +1,7 @@
 package controller;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -19,6 +17,7 @@ import wgu.inventoryApp.MainApplication;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -50,38 +49,69 @@ public class MainController implements Initializable {
     public TableColumn productInventoryLevelCol;
     public TableColumn productPricePerUnitCol;
 
-
+    
+/*   
+// ----------------------backup working copy with alerts
     // Parts search results handler
     public void getResultsHandler(ActionEvent actionEvent) {
         String q = partsSearchFieldMain.getText();
 
-        ObservableList<Part> parts = filter(q);
+        ObservableList<Part> parts = Inventory.lookupPart(q);    //  call look up by string
+
+        if (parts.size() == 0) {
+            try {
+                int id = Integer.parseInt(q);
+                Part part = Inventory.lookupPart(id);   // call look up by id #
+                if (part != null) {
+                    parts.add(part);    // if part does not equal null  add parts to table
+                }
+            }
+            catch (NumberFormatException e){
+                    Alert noParts = new Alert(Alert.AlertType.ERROR);
+                    noParts.setTitle("Error Message");
+                    noParts.setContentText("Part not found");
+                    noParts.showAndWait();
+
+                }
+            }
+
+        partsTable.setItems(parts);
+      }
+
+ */
+
+    
+    // Parts search results handler - uses UI placeholder message
+    public void getResultsHandler(ActionEvent actionEvent) {
+        String q = partsSearchFieldMain.getText();
+
+        ObservableList<Part> parts = Inventory.lookupPart(q);
 
         if (parts.size() == 0){
-        try {
+             try {
             int id = Integer.parseInt(q);
-            Part part = getPartsWithID(id);
+            Part part = Inventory.lookupPart(id);
             if (part != null)
                 parts.add(part);
         }
         catch(NumberFormatException e) {
             // catch and ignore
+           }
         }
-      }
         partsTable.setItems(parts);
     }
 
-
-    // Products Search field Get Results handler
+    
+    // Products Search results handler
     public void getProductResultsHandler(ActionEvent actionEvent) {
         String prq = productsSearchFieldMain.getText();
 
-        ObservableList<Product> products = productFilter(prq);
+        ObservableList<Product> products = Inventory.lookupProduct(prq);
 
         if (products.size() == 0) {
             try {
                 int id = Integer.parseInt(prq);
-                Product product = getProductsWithID(id);
+                Product product = Inventory.lookupProduct(id);
                 if (product != null)
                     products.add(product);
             }
@@ -90,60 +120,6 @@ public class MainController implements Initializable {
             }
         }
         productsTable.setItems(products);
-    }
-
-
-    // Product Search Filter Using Partial Name
-        private ObservableList<Product> productFilter (String partialProdName){
-            ObservableList<Product> namedProducts = FXCollections.observableArrayList();
-            ObservableList<Product> allProducts = Inventory.getAllProducts();
-
-            for (Product product: allProducts) {
-                if (product.getName().contains(partialProdName)) {
-                    namedProducts.add(product);
-                }
-            }
-                    return namedProducts;
-        }
-
-
-    // Products Search Filter by id
-    private Product getProductsWithID (int id){
-        ObservableList<Product> allProducts = Inventory.getAllProducts();
-        // Enhanced loop option
-        for(Product product: allProducts){
-            if (product.getId() == id) {
-                return product;
-            }
-        }
-        return null;
-    }
-
-
-    // Parts Search Filter by id
-    private Part getPartsWithID (int id){
-        ObservableList<Part> allParts = Inventory.getAllParts();
-           // Enhanced loop option
-        for(Part part: allParts){
-            if (part.getId() == id) {
-                return part;
-            }
-        }
-        return null;
-    }
-
-
-    // Parts Search Filter Using  Partial Name  with this filter instead
-    private ObservableList<Part> filter (String partialName) {
-        ObservableList<Part> namedParts = FXCollections.observableArrayList();
-        ObservableList<Part> allParts = Inventory.getAllParts();
-
-        for(Part part: allParts) {
-            if(part.getName().contains(partialName)) {
-                namedParts.add(part);
-            }
-        }
-        return namedParts;
     }
 
 
@@ -172,43 +148,45 @@ public class MainController implements Initializable {
     }
 
 
-    @FXML
-    protected void modifyPartFired() {
-        // welcomeText.setText("Modify Part Fired Leon!");
-        System.out.println("Modify Part button is clicked");
-        TheLabel.setText("You clicked the Modify Part button, Total Number of clicks is: " + partCount++);
+    // Delete Part - delete selected part of display error message if a part is not deleted
+    public void removePartFired(ActionEvent actionEvent){
+
+            Part selectedPart = (Part) partsTable.getSelectionModel().getSelectedItem();
+            if(selectedPart == null) {
+                Alert noDeletePartSelectedMessage = new Alert(Alert.AlertType.WARNING);
+                noDeletePartSelectedMessage.setContentText("No Part Deleted - You must select a part first");
+                noDeletePartSelectedMessage.show();
+            }
+            Inventory.deletePart(selectedPart);
     }
 
 
-    @FXML
-    protected void removePartFired() {
-        System.out.println("Part Delete Fired");
-
-        ObservableList<Part> selectedRows, allParts;
-        allParts = partsTable.getItems();
-        selectedRows = partsTable.getSelectionModel().getSelectedItems();
-        for (Part part : selectedRows) {
-           allParts.remove(part);
-            System.out.println("delete successful");
-        }
-    }
-
-
-    public void modifyProductFired(ActionEvent actionEvent) {
-
-    }
-
-
+    // delete product
     public void deleteProductFired(ActionEvent actionEvent) {
-        System.out.println("Product Delete Fired");
 
-        ObservableList<Product> selectedRows,allProducts;
-        allProducts = productsTable.getItems();
-        selectedRows = productsTable.getSelectionModel().getSelectedItems();
-        for (Product product: selectedRows) {
-            allProducts.remove(product);
+        System.out.println("MainController Product Delete Fired");
+        Product selectedProduct = (Product) productsTable.getSelectionModel().getSelectedItem();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Are you positive?");
+        alert.setContentText("Do you want to delete this part?");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if(result.isPresent() && result.get() == ButtonType.OK) {
+            Product selectedProductToDelete = (Product) productsTable.getSelectionModel().getSelectedItem();
+            if (selectedProductToDelete.getAllAssociatedParts().size() > 0){
+                Alert productCannotBeDeleted = new Alert(Alert.AlertType.ERROR);
+                productCannotBeDeleted.setTitle("Error Message");
+                productCannotBeDeleted.setContentText("Remove associated parts to all products to be deleted");
+                productCannotBeDeleted.showAndWait();
+                return;
+            }
+            Inventory.deleteProduct(selectedProduct);
         }
-    }
+        
+
+
+   }
 
 
     // From main to 'add Part'
@@ -239,34 +217,39 @@ public class MainController implements Initializable {
 
     // From main to 'modifyPart HANDLER'
     public void toModifyPart(ActionEvent actionEvent) throws IOException {
-        // create an fxml loader object
-        // create a constructor. new fxml loader
-        FXMLLoader loader = new FXMLLoader();
+        // try/catch for exception when no part selected
+        try {
+            // create an fxml loader object and create a constructor. new fxml loader
+            FXMLLoader loader = new FXMLLoader();
 
-        // specify which screen we are going to be loading
-        //  loader.setLocation(MainApplication.class.getResource("/view/modifyPart.fxml"));
-        loader.setLocation(getClass().getResource("/view/modifyPart.fxml"));
+            // specify which screen we are going to be loading
+            //  loader.setLocation(MainApplication.class.getResource("/view/modifyPart.fxml"));
+            loader.setLocation(getClass().getResource("/view/modifyPart.fxml"));
 
-        // call load method  overloaded method without any params
-        loader.load();
+            // call load method  overloaded method without any params
+            loader.load();
 
-        ModifyPartViewController MPVController = loader.getController();
-
-
-        MPVController.sendPart(partsTable.getSelectionModel().getSelectedIndex(),(Part) partsTable.getSelectionModel().getSelectedItem()); // had to reference the index in the get
+            ModifyPartViewController MPVController = loader.getController();
 
 
-        // MPVController.sendPart((Part) partsTable.getSelectionModel().getSelectedItem());
+            MPVController.sendPart(partsTable.getSelectionModel().getSelectedIndex(), (Part) partsTable.getSelectionModel().getSelectedItem()); // had to reference the index in the get
 
-        // MPVController.sendPart(partsTable.getSelectionModel().getSelectedIndex(),(Part)partsTable.getSelectionModel().getSelectedItem());
-        // MPVController.sendPart(partsTable.getSelectionModel().getSelectedItem());        // shows error must be cast?
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Parent scene = loader.getRoot();
-        stage.setTitle("Modify Part Screen");
-        stage.setScene(new Scene(scene));
-        stage.show();
+            // MPVController.sendPart((Part) partsTable.getSelectionModel().getSelectedItem());
+
+            // MPVController.sendPart(partsTable.getSelectionModel().getSelectedIndex(),(Part)partsTable.getSelectionModel().getSelectedItem());
+            // MPVController.sendPart(partsTable.getSelectionModel().getSelectedItem());        // shows error must be cast?
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Parent scene = loader.getRoot();
+            stage.setTitle("Modify Part Screen");
+            stage.setScene(new Scene(scene));
+            stage.show();
+
+        } catch (NullPointerException e){
+            Alert noPartSelectedMessage = new Alert(Alert.AlertType.WARNING);
+            noPartSelectedMessage.setContentText("You must select a part first");
+            noPartSelectedMessage.show();
+        }
     }
-
 
     // From main to modifyProduct
     public void toModifyProduct(ActionEvent actionEvent) throws IOException{
