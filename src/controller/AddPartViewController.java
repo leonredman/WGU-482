@@ -5,10 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.InHouse;
 import model.Inventory;
@@ -64,24 +61,40 @@ public class AddPartViewController {
         String name = partNameTxt.getText();
         double price = Double.parseDouble(partStockTxt.getText());  // using wrapper class to convert input field string to int
         int stock = Integer.parseInt(partStockTxt.getText());
-        int min = Integer.parseInt(partInventoryMinTxt.getText());
         int max= Integer.parseInt(partInventoryMaxTxt.getText());
+        int min = Integer.parseInt(partInventoryMinTxt.getText());
+
+        if (max < min) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Maximum must be greater than minimum.");
+            alert.showAndWait();
+            return;
+        }
+        //Inventory should be between the min and max values.
+        else if (stock < min || max < stock) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Inventory must be within min and max.");
+            alert.showAndWait();
+            return;
+        }
 
         if(addPartInHouseYes.isSelected()) {
             machineId = Integer.parseInt(partToggleIdTxt.getText());
             System.out.println(machineId);   // for debugging
-            InHouse addPart = new InHouse(id, name, price, stock, min, max, machineId);
+            InHouse addPart = new InHouse(id, name, price, stock, max, min, machineId);
             System.out.println(machineId);
             Inventory.addPart(addPart);
         }
 
         else {
             String companyName = partToggleIdTxt.getText();
-            Outsourced addPart = new Outsourced(id,name, price, stock, min, max, companyName );
+            Outsourced addPart = new Outsourced(id,name, price, stock, max, min, companyName );
             System.out.println(companyName);
             Inventory.addPart(addPart);
 
         }
+
+
+
+
            // isInHouse = false;
 
         // had error here, was trying to instantiate an abstract class Part instead of inHouse which extends part

@@ -49,9 +49,9 @@ public class MainController implements Initializable {
     public TableColumn productInventoryLevelCol;
     public TableColumn productPricePerUnitCol;
 
-    
-/*   
-// ----------------------backup working copy with alerts
+// backup working copy with alerts
+/* backup parts search commented out
+
     // Parts search results handler
     public void getResultsHandler(ActionEvent actionEvent) {
         String q = partsSearchFieldMain.getText();
@@ -77,10 +77,9 @@ public class MainController implements Initializable {
 
         partsTable.setItems(parts);
       }
-
  */
 
-    
+
     // Parts search results handler - uses UI placeholder message
     public void getResultsHandler(ActionEvent actionEvent) {
         String q = partsSearchFieldMain.getText();
@@ -101,7 +100,7 @@ public class MainController implements Initializable {
         partsTable.setItems(parts);
     }
 
-    
+
     // Products Search results handler
     public void getProductResultsHandler(ActionEvent actionEvent) {
         String prq = productsSearchFieldMain.getText();
@@ -149,42 +148,57 @@ public class MainController implements Initializable {
 
 
     // Delete Part - delete selected part of display error message if a part is not deleted
-    public void removePartFired(ActionEvent actionEvent){
+    public void deletePartFired(ActionEvent actionEvent){
 
             Part selectedPart = (Part) partsTable.getSelectionModel().getSelectedItem();
             if(selectedPart == null) {
                 Alert noDeletePartSelectedMessage = new Alert(Alert.AlertType.WARNING);
                 noDeletePartSelectedMessage.setContentText("No Part Deleted - You must select a part first");
                 noDeletePartSelectedMessage.show();
+            } if (selectedPart != null){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText("This Part will be permanently Deleted?");
+            alert.setContentText("Do you want to Delete this Now?");
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                Inventory.deletePart(selectedPart);
             }
-            Inventory.deletePart(selectedPart);
+        }
+         //   Inventory.deletePart(selectedPart);
     }
 
 
     // delete product
     public void deleteProductFired(ActionEvent actionEvent) {
 
-        System.out.println("MainController Product Delete Fired");
         Product selectedProduct = (Product) productsTable.getSelectionModel().getSelectedItem();
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation");
-        alert.setHeaderText("Are you positive?");
-        alert.setContentText("Do you want to delete this part?");
-        Optional<ButtonType> result = alert.showAndWait();
 
-        if(result.isPresent() && result.get() == ButtonType.OK) {
-            Product selectedProductToDelete = (Product) productsTable.getSelectionModel().getSelectedItem();
-            if (selectedProductToDelete.getAllAssociatedParts().size() > 0){
-                Alert productCannotBeDeleted = new Alert(Alert.AlertType.ERROR);
-                productCannotBeDeleted.setTitle("Error Message");
-                productCannotBeDeleted.setContentText("Remove associated parts to all products to be deleted");
-                productCannotBeDeleted.showAndWait();
-                return;
+        if(selectedProduct == null) {
+            Alert noDeletePartSelectedMessage = new Alert(Alert.AlertType.WARNING);
+            noDeletePartSelectedMessage.setContentText("No Product Deleted - You must select a product first");
+            noDeletePartSelectedMessage.show();
+        } if (selectedProduct != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText("This Product will be permanently Deleted?");
+            alert.setContentText("Do you want to Delete this Now?");
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                Product selectedProductToDelete = (Product) productsTable.getSelectionModel().getSelectedItem();
+                if (selectedProductToDelete.getAllAssociatedParts().size() > 0) {
+                    Alert productCannotBeDeleted = new Alert(Alert.AlertType.ERROR);
+                    productCannotBeDeleted.setTitle("Error Message");
+                    productCannotBeDeleted.setContentText("Remove associated parts to all products to be deleted");
+                    productCannotBeDeleted.showAndWait();
+                    return;
+                }
+                Inventory.deleteProduct(selectedProduct);
             }
-            Inventory.deleteProduct(selectedProduct);
-        }
-        
 
+        }
 
    }
 

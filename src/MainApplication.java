@@ -28,24 +28,24 @@ public class MainApplication extends Application {
     private void addTestData () {
         //Parts Test Data
         // use createId method instead of hard coded id num
-        Part ssdDrive = new InHouse(Inventory.createId(), "SSD Drive", 49.99, 60, 1, 70, 101);
+        Part ssdDrive = new InHouse(Inventory.createId(), "SSD Drive", 49.99, 60, 60, 20, 101);
         Inventory.addPart(ssdDrive);
 
-        Part pwrSupply = new InHouse(Inventory.createId(), "Power Supply EVGA", 69.99, 20, 9, 6,202);
+        Part pwrSupply = new InHouse(Inventory.createId(), "Power Supply EVGA", 69.99, 20, 20, 5,202);
         Inventory.addPart(pwrSupply);
 
-        Part coolFan = new Outsourced(Inventory.createId(), "CORSAIR Cooling Fan", 149.99, 40, 5,3,"Acme");
+        Part coolFan = new Outsourced(Inventory.createId(), "CORSAIR Cooling Fan", 149.99, 40, 40,10,"Acme");
         Inventory.addPart(coolFan);
-        
+
 
         // Products Test Data
-        Product gamingChair = new Product(Inventory.createId(), "Gaming Chair", 10, 149.99, 20, 50);
+        Product gamingChair = new Product(Inventory.createId(), "Gaming Chair", 10, 149.99, 15, 1);
         Inventory.addProduct(gamingChair);
 
-        SmallLaptop smLaptop = new SmallLaptop(Inventory.createId(), "Macbook Air", 1500,50.00, 9, 9);
+        Product smLaptop = new Product(Inventory.createId(), "Macbook Air", 15,50.00, 20, 1);
         Inventory.addProduct(smLaptop);
 
-        GamingPc gamePc = new GamingPc(Inventory.createId(), "Razor Gamer Extreme", 200, 1500.00, 50,1);
+        Product gamePc = new Product(Inventory.createId(), "Razor Gamer Extreme", 20, 1500.00, 30,1);
         Inventory.addProduct(gamePc);
     }
 

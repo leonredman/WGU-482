@@ -3,7 +3,6 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -15,15 +14,10 @@ import model.Part;
 import wgu.inventoryApp.MainApplication;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
-public class ModifyPartViewController implements Initializable {
-   // Stage stage;
-   // Parent scene;
-    public Label partIDLbl;
-    @FXML
-    private ToggleGroup tGroup;
+
+public class ModifyPartViewController {
+
     @FXML
     private Label modChangeMe;
     @FXML
@@ -44,69 +38,43 @@ public class ModifyPartViewController implements Initializable {
     private TextField partModMinLbl;
     @FXML
     private TextField partModToggleLbl;
+    
+    private int currentIndex = 0;
 
-private int currentIndex = 0;
-
-public Part selectedPart;
-private int partID;
-
-
+    // Cancel Button
     public void toMainFromModify(ActionEvent actionEvent) throws IOException {
-//        private int partId;
+
         Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
- //     Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-      Parent root = FXMLLoader.load(MainApplication.class.getResource("/view/mainScreen.fxml"));
-//        scene = FXMLLoader.load(MainApplication.class.getResource("/view/mainScreen.fxml"));
-
-
+        Parent root = FXMLLoader.load(MainApplication.class.getResource("/view/mainScreen.fxml"));
         Scene scene = new Scene(root, 1200, 450);
         stage.setTitle("Back To Main Screen");
         stage.setScene(scene);
         stage.show();
     }
-    public void sendPart(Part part) {
-//        this.selectedPart = selectedPart;
-        int PartID = Inventory.getAllParts().indexOf(selectedPart);
 
+    //public void sendPart(Part part) {
+    public void sendPart(int selectedIndex, Part part) {
+    // if inHouse radio is selected (true) get data id, name, inv, price, max, min, machine id part instance of InHouse
+
+        currentIndex = selectedIndex;
+        
         if (part instanceof InHouse) {
             modPartInHouseYes.setSelected(true);
-            partModToggleLbl.setText(String.valueOf(((InHouse) part).getMachineId()));
-
-
-        
-//    public void sendPart(int selectedIndex,Part part) {
-        // if inHouse radio is selected (true) get data id, name, inv, price, max, min, machine id   part instanceof InHouse
-//    currentIndex = selectedIndex;
-//
-//        if (part instanceof InHouse) {
-//            modPartInHouseYes.setSelected(true);
-//           partModToggleLbl.setText(String.valueOf(((InHouse) part).getMachineId()));
-//           // partModToggleLbl.setText(String.valueOf(InHouse.getMachineId()));
-//            System.out.println(InHouse.getMachineId());
-
+            partModToggleLbl.setText(String.valueOf(((InHouse) part).getMachineId()));  // cast InHouse Part object so we can access getMachineId
         } else {
-
-            modPartOutSourcedYes.setSelected(true);
-            partModToggleLbl.setText(((Outsourced) part).getCompanyName());
+           modPartOutSourcedYes.setSelected(true);
+           modChangeMe.setText("Company Name");
+           partModToggleLbl.setText(((Outsourced) part).getCompanyName());   // cast
         }
 
-            // retrieved id and converted from string to assign to label
-            partModIdLbl.setText(String.valueOf(part.getId()));
-            partModNameLbl.setText(part.getName());
-            partModInventoryLbl.setText(String.valueOf(part.getStock()));
-            partModPriceLbl.setText(String.valueOf(part.getPrice()));
-            partModMaxLbl.setText(String.valueOf(part.getMax()));
-            partModMinLbl.setText(String.valueOf(part.getMin()));
-            //partModToggleLbl.setText(String.valueOf(InHouse.getMachineId()));
-
-
-    }
-
-
-    @Override
-    public void initialize (URL location, ResourceBundle resources){
-    // to do
-    }
+        // retrieved id and converted from string to assign to label
+        partModIdLbl.setText(String.valueOf(part.getId()));
+        partModNameLbl.setText(part.getName());
+        partModInventoryLbl.setText(String.valueOf(part.getStock()));
+        partModPriceLbl.setText(String.valueOf(part.getPrice()));
+        partModMaxLbl.setText(String.valueOf(part.getMax()));
+        partModMinLbl.setText(String.valueOf(part.getMin()));
+        }
 
 
     public void onFirst(ActionEvent actionEvent) {
@@ -117,6 +85,64 @@ private int partID;
         modChangeMe.setText("Company Name");
     }
 
+    public void modPartSaveBtn(ActionEvent actionEvent) throws IOException {
+    try{
+        int modPartId = Integer.parseInt(partModIdLbl.getText());
+       // System.out.println("modPartId = " + modPartId);
+        String modPartName = partModNameLbl.getText();
+        int modPartInventory = Integer.parseInt(partModInventoryLbl.getText());
+        double modPartPrice = Double.parseDouble(partModPriceLbl.getText());
+        int modPartMax = Integer.parseInt(partModMaxLbl.getText());
+        int modPartMin = Integer.parseInt(partModMinLbl.getText());
+        int machineId;
+        
+        String companyName;
+
+    // todo
+        //Min should be less than max.
+    /*   if (max < min) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Maximum must be greater than minimum.");
+            alert.showAndWait();
+            return;
+        }  
+        
+       //Inventory should be between the min and max values.
+            else if (inStock < min || max < inStock) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Inventory must be within min and max.");
+                alert.showAndWait();
+                return;
+            }
+    */
+
+
+        if(modPartInHouseYes.isSelected()) {
+            machineId = Integer.parseInt(partModToggleLbl.getText());
+            InHouse modifiedPart = new InHouse(modPartId, modPartName, modPartPrice, modPartInventory, modPartMax, modPartMin, machineId );
+            System.out.println("modifiedPart id = " + modifiedPart.getId());
+            Inventory.updatePart(currentIndex,modifiedPart);
+        }
+
+        if (modPartOutSourcedYes.isSelected()) {
+            companyName = partModToggleLbl.getText();
+            Outsourced modifiedPart = new Outsourced(modPartId, modPartName,modPartPrice,modPartInventory,modPartMax,modPartMin,companyName);
+            Inventory.updatePart(currentIndex,modifiedPart);
+        }
+
+        Parent root = FXMLLoader.load(MainApplication.class.getResource("/view/mainScreen.fxml"));
+        Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 1200, 450);
+        stage.setTitle("Back To Main Screen");
+        stage.setScene(scene);
+        stage.show();
+
+    } catch (NumberFormatException e) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("You have Input The Wrong Value");
+        alert.setContentText("Input an Incorrect value");
+        alert.showAndWait();
+        return;
+    }
+  }
 }
 
 

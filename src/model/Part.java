@@ -10,19 +10,20 @@ package model;
     private String name;
     private double price;
     private int stock;
-    private int min;
     private int max;
+    private int min;
 
 // constructor
-    public Part(int id, String name, double price, int stock, int min, int max) {
+    public Part(int id, String name, double price, int stock, int max, int min ) {
 
      // this.id = Inventory.nextId;   // fixed  bug here was making the update use the next id instead of the selected index id
         this.id = id;
         this.name = name;
         this.price = price;
         this.stock = stock;
-        this.min = min;
         this.max = max;
+        this.min = min;
+
     }
 
      // Getters and Setters

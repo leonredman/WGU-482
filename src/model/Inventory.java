@@ -107,7 +107,7 @@ public class Inventory {
             return false;
         }
     }
-    
+
 
     // method to delete product from selected list
 //    public static boolean deleteProduct(Product selectedProduct){
@@ -134,7 +134,7 @@ public class Inventory {
         }
     }
 
-    
+
     // method to get all parts from list
     public static ObservableList<Part> getAllParts() {
         return allParts;
