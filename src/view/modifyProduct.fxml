@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="625.0" prefWidth="1055.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ModifyProductViewController">
+   <children>
+<!--      <Button fx:id="modPartButton" layoutX="25.0" layoutY="575.0" mnemonicParsing="false" onAction="#toMainFromModifyProduct" prefHeight="25.0" prefWidth="194.0" text="Back To Main Scene" />-->
+      <AnchorPane layoutX="29.0" layoutY="21.0" prefHeight="25.0" prefWidth="542.0">
+         <children>
+            <Label layoutX="37.0" prefHeight="25.0" prefWidth="99.0" text="Modify Product">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+
+      <AnchorPane layoutX="20.0" layoutY="43.0" prefHeight="439.0" prefWidth="1001.0">
+         <children>
+            <Label layoutX="48.0" layoutY="51.0" text="ID" />
+            <TextField fx:id="prodModIdLbl" disable="true" layoutX="121.0" layoutY="47.0" promptText="Auto Gen-Disabled" />
+            <Label layoutX="39.0" layoutY="95.0" text="Name" />
+            <TextField fx:id="productModNameLbl" layoutX="121.0" layoutY="91.0" />
+            <Label layoutX="39.0" layoutY="137.0" text="Inv" />
+            <TextField fx:id="productModInventoryLbl" layoutX="121.0" layoutY="133.0" />
+            <Label layoutX="33.0" layoutY="182.0" text="Price" />
+            <TextField fx:id="productModPriceLbl" layoutX="121.0" layoutY="178.0" />
+            <Label layoutX="33.0" layoutY="225.0" text="Max" />
+            <TextField fx:id="productModMaxVal" layoutX="121.0" layoutY="221.0" />
+            <Label layoutX="296.0" layoutY="225.0" text="Min" />
+            <TextField fx:id="prodModMinVal" layoutX="323.0" layoutY="221.0" prefHeight="25.0" prefWidth="142.0" />
+            <TableView fx:id="modifyProductPartsTable" layoutX="499.0" layoutY="49.0" prefHeight="176.0" prefWidth="410.0">
+               <columns>
+                  <TableColumn fx:id="modifyProdPartIdColumn" prefWidth="75.0" text="Part ID" />
+                  <TableColumn fx:id="modifyProdPartNameColumn" prefWidth="86.0" text="Part Name" />
+                  <TableColumn fx:id="modifyProdStockColumn" prefWidth="122.0" text="Inventory Level" />
+                  <TableColumn fx:id="modifyProdPartPriceColumn" prefWidth="134.0" text="Price/Cost per Unit" />
+               </columns>
+            </TableView>
+            <TableView fx:id="modAssociatedPartsTable" layoutX="499.0" layoutY="284.0" prefHeight="141.0" prefWidth="410.0">
+               <columns>
+                  <TableColumn fx:id="modAssocProdPartIdColumn" prefWidth="75.0" text="Part ID" />
+                  <TableColumn fx:id="modAssocProdPartNameColumn" prefWidth="75.0" text="Part Name" />
+                  <TableColumn fx:id="modAssocProdPartStockColumn" prefWidth="118.0" text="Inventory Level" />
+                  <TableColumn fx:id="modAssocProdPartPriceColumn" prefWidth="141.0" text="Price/Cost per Unit" />
+               </columns>
+            </TableView>
+            <TextField fx:id="modProductSearch" layoutX="725.0" layoutY="14.0" onAction="#onModProductPartSearch" prefHeight="25.0" prefWidth="184.0" promptText="Search by Part ID or Name" />
+            <Button layoutX="790.0" layoutY="246.0" mnemonicParsing="false" onAction="#addModifiedAssocPart" text="Add" />
+
+
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="122.0" layoutY="492.0" prefHeight="73.0" prefWidth="783.0">
+         <children>
+            <Button layoutX="585.0" layoutY="41.0" mnemonicParsing="false" onAction="#saveModifiedAssocPart" prefHeight="25.0" prefWidth="71.0" text="Save" />
+            <Button layoutX="680.0" layoutY="41.0" mnemonicParsing="false" onAction="#toMainFromModifyProduct" prefHeight="17.0" prefWidth="71.0" text="Cancel" />
+            <!--      <Button fx:id="modPartButton" layoutX="25.0" layoutY="575.0" mnemonicParsing="false" onAction="#toMainFromModifyProduct" prefHeight="25.0" prefWidth="194.0" text="Back To Main Scene" />-->
+
+            <Button layoutX="584.0" layoutY="2.0" mnemonicParsing="false" onAction="#toRemoveAssociatedPart" prefHeight="25.0" prefWidth="170.0" text="Remove Associated Part" />
+         </children>
+      </AnchorPane>
+
+   </children>
+</AnchorPane>
