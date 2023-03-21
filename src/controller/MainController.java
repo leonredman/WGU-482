@@ -195,8 +195,7 @@ public class MainController implements Initializable {
 
 
     public void modifyProductFired(ActionEvent actionEvent) {
-        System.out.println("Product Modify Fired");
-        TheLabel.setText("You clicked the Modify Product button, Total Number of clicks is: " + productCount++);
+
     }
 
 
@@ -252,10 +251,15 @@ public class MainController implements Initializable {
         loader.load();
 
         ModifyPartViewController MPVController = loader.getController();
-   //   MPVController.sendPart(partsTable.getSelectionModel().getSelectedItem());        // shows error must be cast?
-       MPVController.sendPart((Part) partsTable.getSelectionModel().getSelectedItem());
-       // MPVController.sendPart(partsTable.getSelectionModel().getSelectedIndex(),(Part)partsTable.getSelectionModel().getSelectedItem());
 
+
+        MPVController.sendPart(partsTable.getSelectionModel().getSelectedIndex(),(Part) partsTable.getSelectionModel().getSelectedItem()); // had to reference the index in the get
+
+
+        // MPVController.sendPart((Part) partsTable.getSelectionModel().getSelectedItem());
+
+        // MPVController.sendPart(partsTable.getSelectionModel().getSelectedIndex(),(Part)partsTable.getSelectionModel().getSelectedItem());
+        // MPVController.sendPart(partsTable.getSelectionModel().getSelectedItem());        // shows error must be cast?
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Parent scene = loader.getRoot();
         stage.setTitle("Modify Part Screen");
@@ -267,13 +271,14 @@ public class MainController implements Initializable {
     // From main to modifyProduct
     public void toModifyProduct(ActionEvent actionEvent) throws IOException{
         FXMLLoader loader = new FXMLLoader() ;
-    //  Parent root = FXMLLoader.load(MainApplication.class.getResource("/view/modifyProduct.fxml"));
+    // Parent root = FXMLLoader.load(MainApplication.class.getResource("/view/modifyProduct.fxml"));
     loader.setLocation((getClass().getResource("/view/modifyProduct.fxml")));
     loader.load();
 
     ModifyProductViewController MPRVController = loader.getController();
 
-    MPRVController.sendProduct((Product)productsTable.getSelectionModel().getSelectedItem());
+    //MPRVController.sendProduct((Product)productsTable.getSelectionModel().getSelectedItem());
+    MPRVController.sendProduct(productsTable.getSelectionModel().getSelectedIndex(),(Product)productsTable.getSelectionModel().getSelectedItem());  // we needed to pass in selectedIndex
 
     Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
     // Scene scene = new Scene(root);
