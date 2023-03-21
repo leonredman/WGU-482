@@ -73,14 +73,14 @@ public class Inventory {
 
         return null;
     }
-
+    // update part with an observable list
     public static void updatePart(int index, Part selectedPart) {
         allParts.set(index, selectedPart);
     }
 
-
-    public static void updateProduct(int index, Product newProduct) {
-        return ;
+    // update product with an observable list
+    public static void updateProduct(int index, Product selectedProduct) {
+        allProducts.set(index, selectedProduct);
     }
 
     public static boolean deletePart(Part selectedPart){
