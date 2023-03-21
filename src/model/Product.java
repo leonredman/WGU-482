@@ -11,11 +11,11 @@ public class Product {
     private int max;
     private int min;
 
-    public static ObservableList<Part> associatedParts = FXCollections.observableArrayList();
+    //List of Parts "Associated" with Product
+    private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
 
-
-    public Product(int id, String name, int stock, double price, int min, int max) {
-
+    public Product(int id, String name, int stock, double price, int max, int min) {
+        // Basic Values of Product
      // this.id = Inventory.nextId;
         this.id = id;
         this.name = name;
@@ -23,9 +23,9 @@ public class Product {
         this.price = price;
         this.max = max;
         this.min = min;
-
     }
 
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -74,22 +74,21 @@ public class Product {
         this.max = max;
     }
 
-    // unfinished feature methods ???
-    //  public void setAssociated(boolean associated) {
-    //     this.associated = associated;
-    //  }
 
-    // add a part to the list
+    // adding  a part to the Product list
     public void addAssociatedPart(Part part) {
         associatedParts.add(part);
     }
 
-    public boolean deleteAssociatedPart(Part selectedAssociatedPart) {
-        associatedParts.remove(selectedAssociatedPart);
 
-        return true;
+    // deleting a part from the Product list
+    public boolean deleteAssociatedPart(Part selectedAssociatedPart) {
+   // public static boolean deleteAssociatedPart(Part selectedAssociatedPart) {
+      return associatedParts.remove(selectedAssociatedPart);
     }
 
+
+    // getting "The Associated Parts List" for the Product
     public ObservableList<Part> getAllAssociatedParts() {
 
         return associatedParts;

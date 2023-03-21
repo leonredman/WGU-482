@@ -4,18 +4,6 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<!--<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddProductViewController">-->
-<!--   <children>-->
-<!--      <Label layoutX="180.0" layoutY="63.0" text="Add Product Screen">-->
-<!--         <font>-->
-<!--            <Font size="26.0" />-->
-<!--         </font>-->
-<!--      </Label>-->
-<!--      <Button layoutX="255.0" layoutY="236.0" mnemonicParsing="false" onAction="#addProdBackToMain" text="Back to Main Screen" />-->
-<!--   </children>-->
-<!--</AnchorPane>-->
-<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-
 <AnchorPane prefHeight="625.0" prefWidth="1055.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddProductViewController">
    <children>
 <!--      <Button fx:id="thirdButton" layoutX="25.0" layoutY="575.0" mnemonicParsing="false" onAction="#addProdBackToMain" prefHeight="25.0" prefWidth="194.0" text="Back To Main Scene" />-->
@@ -58,7 +46,7 @@
                   <TableColumn fx:id="associatedProductPartPrice" prefWidth="141.0" text="Price/Cost per Unit" />
               </columns>
             </TableView>
-            <TextField fx:id="addProductSearch" layoutX="725.0" layoutY="14.0" onAction="#onProductSearch" prefHeight="25.0" prefWidth="184.0" promptText="Search by Part ID or Name" />
+            <TextField fx:id="addProductSearch" layoutX="725.0" layoutY="14.0" onAction="#onAddProductSearch" prefHeight="25.0" prefWidth="184.0" promptText="Search by Part ID or Name" />
             <Button layoutX="790.0" layoutY="246.0" mnemonicParsing="false" onAction="#onAddProductBtn" text="Add" />
 
 
