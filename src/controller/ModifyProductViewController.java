@@ -65,7 +65,7 @@ public class ModifyProductViewController implements Initializable {
 
     private int currentIndex = 0;
 
-    
+
     // Cancel Button
     public void toMainFromModifyProduct(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(MainApplication.class.getResource("/view/mainScreen.fxml"));
@@ -78,7 +78,7 @@ public class ModifyProductViewController implements Initializable {
         stage.show();
     }
 
-    
+
     // Sets text to Product Update fields
     public void sendProduct(int selectedIndex, Product product) {
 
@@ -117,7 +117,7 @@ public class ModifyProductViewController implements Initializable {
         modAssocProdPartPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
 
-    
+
     // Add part to associated parts list
     public void addModifiedAssocPart(ActionEvent actionEvent) {
 
@@ -136,9 +136,9 @@ public class ModifyProductViewController implements Initializable {
         }
     }
 
-    
-    public void saveModifiedAssocPart(ActionEvent actionEvent) throws IOException {
 
+    public void saveModifiedAssocPart(ActionEvent actionEvent) throws IOException {
+    try{
         int id = Integer.parseInt(prodModIdLbl.getText());
         String name = productModNameLbl.getText();
         int stock = Integer.parseInt(productModInventoryLbl.getText());
@@ -146,6 +146,11 @@ public class ModifyProductViewController implements Initializable {
         int max = Integer.parseInt(productModMaxVal.getText());
         int min = Integer.parseInt(prodModMinVal.getText());
 
+        if(productModNameLbl.getText().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR, "No Empty Fields are Allowed.");
+            alert.showAndWait();
+            return;
+        }
         if (stock > max || stock < min) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Inventory requirements: Inventory Amount must be within min and max range.");
             alert.showAndWait();
@@ -155,7 +160,7 @@ public class ModifyProductViewController implements Initializable {
             alert.showAndWait();
             return;
         }
-
+        // replace existing product object with new product
         Product modifiedProduct = new Product(id, name,stock, price, max, min);
         if (modifiedProduct != associatedPartsLst) {
             Inventory.updateProduct(currentIndex, modifiedProduct);
@@ -172,26 +177,61 @@ public class ModifyProductViewController implements Initializable {
         stage.setTitle("Back To Main Screen");
         stage.setScene(scene);
         stage.show();
+    }  catch (NumberFormatException e) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("There is a Field Input Error");
+        alert.setContentText("Please complete and check all your input values and try again");
+        alert.showAndWait();
     }
+}
 
-    
+
+
+
+
+//-------------------- working method remove associate part from table---------------------------
+
     public void toRemoveAssociatedPart(ActionEvent actionEvent) {
         Part selectedPart = (Part) modAssociatedPartsTable.getSelectionModel().getSelectedItem();
 
         if (selectedPart == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Input Error");
-            alert.setContentText("Select part from list");
+            alert.setTitle("User Error");
+            alert.setContentText("You must Select part to remove from list");
             alert.showAndWait();
-            return;
         } else if (associatedPartsLst.contains(selectedPart)) {
-//            Product.deleteAssociatedPart(selectedPart);         // might not need as is Static method
             associatedPartsLst.remove(selectedPart);
+           // deleteAssociatedPartTest(selectedPart);
+            Alert partDeleteSuccessful = new Alert(Alert.AlertType.INFORMATION);
+            partDeleteSuccessful.setTitle("Confirmation Message");
+            partDeleteSuccessful.setContentText("The associated part was deleted");
+            partDeleteSuccessful.showAndWait();
             modAssociatedPartsTable.setItems(associatedPartsLst);
         }
     }
+// -------------------- End working method---------------------------
+//
+//
+//
+//
+//
+//
+//
+// use deleteAssociatedPart(selectedAssociatedPart) method in Product
+ // ------------------------------------WIP Dependency function---------------------
+//    public void toRemoveAssociatedPart(ActionEvent actionEvent) {
+//        Part selectedAssociatedPart = (Part) modAssociatedPartsTable.getSelectionModel().getSelectedItem();
+//
+//        for(Part part: associatedPartsLst)
+//            if (part == selectedAssociatedPart)
+//
+              //  associatedPartsLst.remove(selectedAssociatedPart);
+//        }
+        //Product.deleteAssociatedPart(selectedAssociatedPart);
+//    }
+// ---------------------------------^End WIP------------------------
 
-    
+
     public void onModProductPartSearch(ActionEvent actionEvent) {
 
         String q = modProductSearch.getText();
@@ -212,7 +252,7 @@ public class ModifyProductViewController implements Initializable {
         modifyProductPartsTable.setItems(parts);
     }
 
-    
+
     // Mod Products Parts Search Filter by id
     private Part modProductsSearchPartsWithID (int id){
         ObservableList<Part> allParts = Inventory.getAllParts();
@@ -225,7 +265,7 @@ public class ModifyProductViewController implements Initializable {
         return null;
     }
 
-    
+
     // ModProducts Parts Search Filter Using  Partial Name  with this filter instead
     private ObservableList<Part> filter (String partialName) {
         ObservableList<Part> namedParts = FXCollections.observableArrayList();

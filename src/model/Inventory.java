@@ -2,8 +2,9 @@ package model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
-//  this class is like the Fruit bowl
+
 
 public class Inventory {
     private static ObservableList<Product> allProducts = FXCollections.observableArrayList();
@@ -31,11 +32,11 @@ public class Inventory {
 
 
     // Look Up Part id -shared method looks up part by id
-    public static Part lookupPart(int id) {
+    public static Part lookupPart(int partId) {
         ObservableList<Part> allParts = Inventory.getAllParts();
         // Enhanced loop option
         for(Part part: allParts){
-            if (part.getId() == id) {
+            if (part.getId() == partId) {
                 return part;
             }
         }
@@ -43,13 +44,13 @@ public class Inventory {
     }
 
 
-    // Look Up Part String - shared method to lookup part by string-part name
-    public static ObservableList<Part> lookupPart (String partialName) {
+    // Look Up PartName String - shared method to lookup part by string-part name
+    public static ObservableList<Part> lookupPart (String partName) {
         ObservableList<Part> namedParts = FXCollections.observableArrayList();
         ObservableList<Part> allParts = Inventory.getAllParts();
 
         for(Part part: allParts) {
-            if(part.getName().contains(partialName)) {
+            if(part.getName().contains(partName)) {
                 namedParts.add(part);
             }
         }
@@ -58,11 +59,11 @@ public class Inventory {
 
 
     // Look Up Product id - shared method to lookup product by id
-    public static Product lookupProduct (int id){
+    public static Product lookupProduct (int productId){
     ObservableList<Product> allProducts = Inventory.getAllProducts();
     // Enhanced loop option
         for(Product product: allProducts){
-        if (product.getId() == id) {
+        if (product.getId() == productId) {
             return product;
         }
     }
@@ -70,13 +71,13 @@ public class Inventory {
 }
 
 
-    // Look Up Product String - shared method to lookup product by string-product name
-    public static ObservableList<Product> lookupProduct (String partialProdName){
+    // Look Up Product Name String - shared method to lookup product by string-product name
+    public static ObservableList<Product> lookupProduct (String productName){
         ObservableList<Product> namedProducts = FXCollections.observableArrayList();
         ObservableList<Product> allProducts = Inventory.getAllProducts();
 
         for (Product product: allProducts) {
-            if (product.getName().contains(partialProdName)) {
+            if (product.getName().contains(productName)) {
                 namedProducts.add(product);
             }
         }
@@ -91,16 +92,19 @@ public class Inventory {
 
 
     // method to update product with an observable list
-    public static void updateProduct(int index, Product selectedProduct) {
-        allProducts.set(index, selectedProduct);
+    public static void updateProduct(int index, Product newProduct) {
+        allProducts.set(index, newProduct);
     }
 
 
-
-    // method to delete selected part from list
+    // method to delete selected part from list - returns true if part is deleted
     public static boolean deletePart(Part selectedPart) {
         if (allParts.contains(selectedPart)) {
             allParts.remove(selectedPart);
+            Alert partDeleteSuccessful = new Alert(Alert.AlertType.INFORMATION);
+            partDeleteSuccessful.setTitle("Confirmation Message");
+            partDeleteSuccessful.setContentText("The part was deleted");
+            partDeleteSuccessful.showAndWait();
 
             return true;
         } else {
@@ -109,28 +113,18 @@ public class Inventory {
     }
 
 
-    // method to delete product from selected list
-//    public static boolean deleteProduct(Product selectedProduct){
-//        return true;
-//    }
-
-//    public static boolean deleteProduct(Product selectedProduct){
-//        return true;
-//    }
-
+    // returns true if selected product is deleted
     public static boolean deleteProduct(Product selectedProduct) {
         System.out.println("Inventory Product Delete Fired");
         if(allProducts.contains(selectedProduct)) {
             allProducts.remove(selectedProduct);
+            Alert productDeleteSuccessful = new Alert(Alert.AlertType.INFORMATION);
+            productDeleteSuccessful.setTitle("Confirmation Message");
+            productDeleteSuccessful.setContentText("The product was deleted");
+            productDeleteSuccessful.showAndWait();
             return true;
         } else {
             return false;
-
-//        ObservableList<Product> selectedRows,allProducts;
-//        allProducts = productsTable.getItems();
-//        selectedRows = productsTable.getSelectionModel().getSelectedItems();
-//        for (Product product: selectedRows) {
-//            allProducts.remove(product);
         }
     }
 
@@ -147,32 +141,6 @@ public class Inventory {
     }
 
 
-    // method to get all parts from a filtered list
-//    public static ObservableList<Part> getAllFilteredParts() {
-//        return filteredParts;
-//    }
-
 }
 
 
-//-------------------------------------------------------
-// global function to create id for parts
-
-//    public static int createPartId(int baseId) {
-//        int newPartId = 0;
-//        for (int i = 0; i < Inventory.getAllParts().size(); i++) {
-//            newPartId = baseId * 2;
-//        }
-//        return newPartId;
-//
-//     int n = i * 2;   n is the increment amount
-//     nextId = nextId + n
-//   }
-
-// global function to create id for parts
-
-//    public static int createProductId(int baseId) {
-//        int newProductId = 0;
-//
-//        return newProductId;
-//    }

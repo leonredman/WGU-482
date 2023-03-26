@@ -2,6 +2,7 @@ package model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 public class Product {
     private int id;
@@ -80,17 +81,58 @@ public class Product {
         associatedParts.add(part);
     }
 
-
+    //-------------------- unused function---------------------------
     // deleting a part from the Product list
     public boolean deleteAssociatedPart(Part selectedAssociatedPart) {
-   // public static boolean deleteAssociatedPart(Part selectedAssociatedPart) {
-      return associatedParts.remove(selectedAssociatedPart);
-    }
+        associatedParts.remove(selectedAssociatedPart);
+
+        Alert partDeleteSuccessful = new Alert(Alert.AlertType.INFORMATION);
+        partDeleteSuccessful.setTitle("Confirmation Message");
+        partDeleteSuccessful.setContentText("The Associated part was deleted");
+        partDeleteSuccessful.showAndWait();
+
+    return true;
+   }
+
+//    public boolean deleteAssociatedPartTest (Part selectedAssociatedPart) {
+//        associatedParts.remove(selectedAssociatedPart);
+//        return true;
+//    }
+
+
+   public boolean deleteAssociatedPartDev (Part selectedAssociatedPart){
+        for ( Part part: associatedParts) {
+            if (selectedAssociatedPart == associatedParts) {
+                associatedParts.remove(selectedAssociatedPart);
+            }
+        }
+        return true;
+
+   }
+
+
+//-------------------- end unused function---------------------------
+
+
+    // deleting a part from the Product list
+//    public boolean deleteAssociatedPart(Part selectedAssociatedPart) {
+//
+//// ------------------------- ^WIP--------------------------
+//
+//        associatedParts.remove(selectedAssociatedPart);
+//        Alert partDeleteSuccessful = new Alert(Alert.AlertType.INFORMATION);
+//        partDeleteSuccessful.setTitle("Confirmation Message");
+//        partDeleteSuccessful.setContentText("The part was deleted");
+//        partDeleteSuccessful.showAndWait();
+//
+//        return true;
+//    }
+//
 
 
     // getting "The Associated Parts List" for the Product
     public ObservableList<Part> getAllAssociatedParts() {
-
         return associatedParts;
     }
 }
+
