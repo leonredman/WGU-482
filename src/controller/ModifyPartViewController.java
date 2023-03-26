@@ -52,6 +52,7 @@ public class ModifyPartViewController {
         stage.show();
     }
 
+
     //public void sendPart(Part part) {
     public void sendPart(int selectedIndex, Part part) {
     // if inHouse radio is selected (true) get data id, name, inv, price, max, min, machine id part instance of InHouse
@@ -81,14 +82,15 @@ public class ModifyPartViewController {
         modChangeMe.setText("Machine Id");
     }
 
+
     public void onSecond(ActionEvent actionEvent) {
         modChangeMe.setText("Company Name");
     }
 
+
     public void modPartSaveBtn(ActionEvent actionEvent) throws IOException {
     try{
         int modPartId = Integer.parseInt(partModIdLbl.getText());
-       // System.out.println("modPartId = " + modPartId);
         String modPartName = partModNameLbl.getText();
         int modPartInventory = Integer.parseInt(partModInventoryLbl.getText());
         double modPartPrice = Double.parseDouble(partModPriceLbl.getText());
@@ -98,22 +100,18 @@ public class ModifyPartViewController {
         
         String companyName;
 
-    // todo
         //Min should be less than max.
-    /*   if (max < min) {
+       if (modPartMax < modPartMin) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Maximum must be greater than minimum.");
             alert.showAndWait();
             return;
-        }  
-        
+        }
        //Inventory should be between the min and max values.
-            else if (inStock < min || max < inStock) {
+            else if (modPartInventory < modPartMin || modPartMax < modPartInventory) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Inventory must be within min and max.");
                 alert.showAndWait();
                 return;
             }
-    */
-
 
         if(modPartInHouseYes.isSelected()) {
             machineId = Integer.parseInt(partModToggleLbl.getText());
@@ -137,10 +135,9 @@ public class ModifyPartViewController {
 
     } catch (NumberFormatException e) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("You have Input The Wrong Value");
-        alert.setContentText("Input an Incorrect value");
+        alert.setTitle("There is a Field Input Error");
+        alert.setContentText("Please complete and check all your input values and try again");
         alert.showAndWait();
-        return;
     }
   }
 }

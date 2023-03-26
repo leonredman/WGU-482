@@ -145,6 +145,7 @@ public class AddProductViewController implements Initializable {
 
     // Save Button - Adds Product and goes back to main
     public void onSaveProductBtn(ActionEvent actionEvent) throws IOException{
+        try{
 
          int id = Inventory.createId();
          String name = addProductNameField.getText();
@@ -153,12 +154,17 @@ public class AddProductViewController implements Initializable {
          int max = Integer.parseInt(addProductMaxField.getText());
          int min = Integer.parseInt(addProductMinField.getText());
 
-        if (min > stock || stock < max) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Inventory requirements: Inventory must be within min and max.");
+        //Inventory should be between the min and max values.
+        if (max < min) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Maximum must be greater than minimum.");
             alert.showAndWait();
-        } else if (min >= max) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Inventory requirements: maximum must be greater than minimum");
+            return;
+        }
+
+        else if (stock < min || max < stock) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Inventory must be within min and max.");
             alert.showAndWait();
+            return;
         }
 
         Product addProduct = new Product(id, name, stock, price, max, min);
@@ -169,13 +175,17 @@ public class AddProductViewController implements Initializable {
         Inventory.addProduct(addProduct);
 
         Parent root = FXMLLoader.load(MainApplication.class.getResource("/view/mainScreen.fxml"));
-        //Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-
         Scene scene = new Scene(root, 1200, 450);
         stage.setTitle("Back To Main Screen");
         stage.setScene(scene);
         stage.show();
+    } catch (NumberFormatException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("There is a Field Input Error");
+            alert.setContentText("Please complete and check all your input values and try again");
+            alert.showAndWait();
+        }
     }
 
 
@@ -192,8 +202,12 @@ public class AddProductViewController implements Initializable {
             return;
         }
         else if (associatedPartsLst.contains(selectedPart)); {
-            associatedPartsLst.remove(selectedPart);
-            associatedProductTable.setItems(associatedPartsLst);
+                associatedPartsLst.remove(selectedPart);
+                Alert partDeleteSuccessful = new Alert(Alert.AlertType.INFORMATION);
+                partDeleteSuccessful.setTitle("Confirmation Message");
+                partDeleteSuccessful.setContentText("The associated part was deleted");
+                partDeleteSuccessful.showAndWait();
+                associatedProductTable.setItems(associatedPartsLst);
         }
     }
 

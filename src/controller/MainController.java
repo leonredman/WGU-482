@@ -49,36 +49,6 @@ public class MainController implements Initializable {
     public TableColumn productInventoryLevelCol;
     public TableColumn productPricePerUnitCol;
 
-// backup working copy with alerts
-/* backup parts search commented out
-
-    // Parts search results handler
-    public void getResultsHandler(ActionEvent actionEvent) {
-        String q = partsSearchFieldMain.getText();
-
-        ObservableList<Part> parts = Inventory.lookupPart(q);    //  call look up by string
-
-        if (parts.size() == 0) {
-            try {
-                int id = Integer.parseInt(q);
-                Part part = Inventory.lookupPart(id);   // call look up by id #
-                if (part != null) {
-                    parts.add(part);    // if part does not equal null  add parts to table
-                }
-            }
-            catch (NumberFormatException e){
-                    Alert noParts = new Alert(Alert.AlertType.ERROR);
-                    noParts.setTitle("Error Message");
-                    noParts.setContentText("Part not found");
-                    noParts.showAndWait();
-
-                }
-            }
-
-        partsTable.setItems(parts);
-      }
- */
-
 
     // Parts search results handler - uses UI placeholder message
     public void getResultsHandler(ActionEvent actionEvent) {
@@ -156,17 +126,16 @@ public class MainController implements Initializable {
                 noDeletePartSelectedMessage.setContentText("No Part Deleted - You must select a part first");
                 noDeletePartSelectedMessage.show();
             } if (selectedPart != null){
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Confirmation");
-            alert.setHeaderText("This Part will be permanently Deleted?");
-            alert.setContentText("Do you want to Delete this Now?");
-            Optional<ButtonType> result = alert.showAndWait();
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation");
+                alert.setHeaderText("This Part will be permanently Deleted?");
+                alert.setContentText("Do you want to Delete this Now?");
+                Optional<ButtonType> result = alert.showAndWait();
 
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 Inventory.deletePart(selectedPart);
             }
         }
-         //   Inventory.deletePart(selectedPart);
     }
 
 
@@ -197,9 +166,7 @@ public class MainController implements Initializable {
                 }
                 Inventory.deleteProduct(selectedProduct);
             }
-
         }
-
    }
 
 
@@ -247,11 +214,6 @@ public class MainController implements Initializable {
 
 
             MPVController.sendPart(partsTable.getSelectionModel().getSelectedIndex(), (Part) partsTable.getSelectionModel().getSelectedItem()); // had to reference the index in the get
-
-            // MPVController.sendPart((Part) partsTable.getSelectionModel().getSelectedItem());
-
-            // MPVController.sendPart(partsTable.getSelectionModel().getSelectedIndex(),(Part)partsTable.getSelectionModel().getSelectedItem());
-            // MPVController.sendPart(partsTable.getSelectionModel().getSelectedItem());        // shows error must be cast?
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Parent scene = loader.getRoot();
             stage.setTitle("Modify Part Screen");
@@ -267,22 +229,27 @@ public class MainController implements Initializable {
 
     // From main to modifyProduct
     public void toModifyProduct(ActionEvent actionEvent) throws IOException{
+        try {
         FXMLLoader loader = new FXMLLoader() ;
-    // Parent root = FXMLLoader.load(MainApplication.class.getResource("/view/modifyProduct.fxml"));
+
     loader.setLocation((getClass().getResource("/view/modifyProduct.fxml")));
     loader.load();
 
     ModifyProductViewController MPRVController = loader.getController();
 
-    //MPRVController.sendProduct((Product)productsTable.getSelectionModel().getSelectedItem());
+
     MPRVController.sendProduct(productsTable.getSelectionModel().getSelectedIndex(),(Product)productsTable.getSelectionModel().getSelectedItem());  // we needed to pass in selectedIndex
 
     Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-    // Scene scene = new Scene(root);
     Parent scene = loader.getRoot();
     stage.setTitle("Modify Product Screen");
     stage.setScene(new Scene(scene));
     stage.show();
+    } catch (NullPointerException e){
+        Alert noPartSelectedMessage = new Alert(Alert.AlertType.WARNING);
+        noPartSelectedMessage.setContentText("You must select a product first");
+        noPartSelectedMessage.show();
+    }
 }
 
 
