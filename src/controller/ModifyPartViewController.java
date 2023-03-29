@@ -16,6 +16,10 @@ import wgu.inventoryApp.MainApplication;
 import java.io.IOException;
 
 
+/**
+ * This <b>"ModifyPartViewController"</b> class is the
+ * FXML controller for to modify the part view.
+ */
 public class ModifyPartViewController {
 
     @FXML
@@ -38,10 +42,16 @@ public class ModifyPartViewController {
     private TextField partModMinLbl;
     @FXML
     private TextField partModToggleLbl;
-    
+
     private int currentIndex = 0;
 
-    // Cancel Button
+
+    /**
+     * This <b>"toMainFromModify"</b> method on click of cancel button takes the user
+     * back to the main screen. <br>
+     * @param actionEvent
+     * @throws IOException
+     */
     public void toMainFromModify(ActionEvent actionEvent) throws IOException {
 
         Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
@@ -53,7 +63,12 @@ public class ModifyPartViewController {
     }
 
 
-    //public void sendPart(Part part) {
+    /**
+     * This <b>"sendPart"</b> method takes the selected part and displays the data in the correct
+     * text fields on to modify part page. <br>
+     * @param selectedIndex
+     * @param part
+     */
     public void sendPart(int selectedIndex, Part part) {
     // if inHouse radio is selected (true) get data id, name, inv, price, max, min, machine id part instance of InHouse
 
@@ -78,16 +93,30 @@ public class ModifyPartViewController {
         }
 
 
+    /**
+     * This <b>"onFirst"</b> method on select of radio button change title text. <br>
+      * @param actionEvent
+     */
     public void onFirst(ActionEvent actionEvent) {
         modChangeMe.setText("Machine Id");
     }
 
 
+    /**
+     * This <b>"onSecond"</b> method on select of radio button change title text. <br>
+     * @param actionEvent
+     */
     public void onSecond(ActionEvent actionEvent) {
         modChangeMe.setText("Company Name");
     }
 
 
+    /**
+     * This <b>"modPartSaveBtn"</b> method on click of button
+     * updates the data of the part in the inventory. <br>
+     * @param actionEvent
+     * @throws IOException
+     */
     public void modPartSaveBtn(ActionEvent actionEvent) throws IOException {
     try{
         int modPartId = Integer.parseInt(partModIdLbl.getText());
