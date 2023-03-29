@@ -20,6 +20,10 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+
+/**
+ * This <b>"MainController"</b> class implements all the features of the main screen.
+ */
 public class MainController implements Initializable {
 
     private int partCount = 1;
@@ -50,7 +54,11 @@ public class MainController implements Initializable {
     public TableColumn productPricePerUnitCol;
 
 
-    // Parts search results handler - uses UI placeholder message
+    /**
+     * This <b>"getResultsHandler"</b> method on enter searches parts by id
+     * or string based on user input. <br>
+     * @param actionEvent
+     */
     public void getResultsHandler(ActionEvent actionEvent) {
         String q = partsSearchFieldMain.getText();
 
@@ -71,7 +79,11 @@ public class MainController implements Initializable {
     }
 
 
-    // Products Search results handler
+    /**
+     * This <b>"getProductResultsHandler"</b> method on enter searches products by id
+     * or string based on user input. <br>
+     * @param actionEvent
+     */
     public void getProductResultsHandler(ActionEvent actionEvent) {
         String prq = productsSearchFieldMain.getText();
 
@@ -92,6 +104,12 @@ public class MainController implements Initializable {
     }
 
 
+    /**
+     * This <b>"initialize"</b> method initializes and sets all inventory
+     * to tables and binds columns. <br>
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("I am initialized");
@@ -117,7 +135,10 @@ public class MainController implements Initializable {
     }
 
 
-    // Delete Part - delete selected part of display error message if a part is not deleted
+    /**
+     * This <b>"deletePartFired"</b> method on click removes selected part from inventory. <br>
+     * @param actionEvent
+     */
     public void deletePartFired(ActionEvent actionEvent){
 
             Part selectedPart = (Part) partsTable.getSelectionModel().getSelectedItem();
@@ -139,7 +160,10 @@ public class MainController implements Initializable {
     }
 
 
-    // delete product
+    /**
+     * This <b>"deleteProductFired"</b> method on click removes selected product from inventory. <br>
+     * @param actionEvent
+     */
     public void deleteProductFired(ActionEvent actionEvent) {
 
         Product selectedProduct = (Product) productsTable.getSelectionModel().getSelectedItem();
@@ -170,7 +194,11 @@ public class MainController implements Initializable {
    }
 
 
-    // From main to 'add Part'
+    /**
+     * This <b>"addPart"</b> method on click takes user to add part screen and loads controller. <br>
+     * @param actionEvent
+     * @throws IOException
+     */
     public void addPart(ActionEvent actionEvent) throws IOException {
         // Parent root = FXMLLoader.load(HelloApplication.class.getResource("/main/resources/wgu/firstscreen/addPart.fxml "));
         Parent root = FXMLLoader.load(getClass().getResource("/view/addPart.fxml"));
@@ -185,7 +213,11 @@ public class MainController implements Initializable {
     }
 
 
-    // From main to 'add Product'
+    /**
+     * This <b>"addProduct"</b> method on click takes user to add product screen and loads controller. <br>
+     * @param actionEvent
+     * @throws IOException
+     */
     public void addProduct(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(MainApplication.class.getResource("/view/addProduct.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -196,7 +228,12 @@ public class MainController implements Initializable {
     }
 
 
-    // From main to 'modifyPart HANDLER'
+    /**
+     * This <b>"toModifyPart"</b> method on click takes user to modify part screen and
+     * loads data for selected part. <br>
+     * @param actionEvent
+     * @throws IOException
+     */
     public void toModifyPart(ActionEvent actionEvent) throws IOException {
         // try/catch for exception when no part selected
         try {
@@ -227,7 +264,13 @@ public class MainController implements Initializable {
         }
     }
 
-    // From main to modifyProduct
+
+    /**
+     * This <b>"toModifyProduct"</b> method on click takes user to modify product screen and
+     * loads data for selected product. <br>
+     * @param actionEvent
+     * @throws IOException
+     */
     public void toModifyProduct(ActionEvent actionEvent) throws IOException{
         try {
         FXMLLoader loader = new FXMLLoader() ;
@@ -236,7 +279,6 @@ public class MainController implements Initializable {
     loader.load();
 
     ModifyProductViewController MPRVController = loader.getController();
-
 
     MPRVController.sendProduct(productsTable.getSelectionModel().getSelectedIndex(),(Product)productsTable.getSelectionModel().getSelectedItem());  // we needed to pass in selectedIndex
 
@@ -253,9 +295,17 @@ public class MainController implements Initializable {
 }
 
 
+    /**
+     * This <b>"exitBtn"</b> method terminates the program. <br>
+     * @param actionEvent
+     */
     public void exitBtn(ActionEvent actionEvent) {
-        System.exit(0);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("This will end the program now");
+        alert.setContentText("Do you want to exit the program now?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            System.exit(0);
     }
-
-
-}
+}}
