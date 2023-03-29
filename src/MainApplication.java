@@ -9,10 +9,24 @@ import model.*;
 
 import java.io.IOException;
 
+/**
+ * This class creates an app for inventory control with test data.<br>
+ *<br>
+ * FUTURE FEATURES - Some future feature I would add to this application is to have it store data in a database <br>
+ * and to have the search feature auto filter as you type characters in the search field without having to press enter.<br>
+ *<br>
+ * RUNTIME ERROR - (Bug) I had a runtime error that kept displaying the same machine id for all parts<br>
+ * and would not change due to the fact that I had the InHouse class set as static.<br>
+ * I fixed this by changing the class to public. <br>
+ */
 public class MainApplication extends Application {
 
-    // new code for multi scenes replaced original auto generated for one scene here
 
+/**
+ * This method starts the main screen fxml and adds the test data.<br>
+ * <br>
+ * @param primaryStage This is the stage that FX passes in. <br>
+ */
     @Override
     public void start(Stage primaryStage) throws IOException {
 
@@ -25,6 +39,9 @@ public class MainApplication extends Application {
     }
 
 
+    /**
+     * This method adds the test data for parts and products.
+     */
     private void addTestData () {
         //Parts Test Data
         // use createId method instead of hard coded id num
@@ -50,6 +67,11 @@ public class MainApplication extends Application {
     }
 
 
+    /**
+     * This is the main method. This is the first method that gets called when you run your java program.
+     *
+     * @param args These are the command line args that will not be used in this program.
+     */
     public static void main(String[] args) {
         launch();
     }
