@@ -24,6 +24,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * This <b>"ModifyProductViewController"</b> class is the FXML controller for to modify the product view. <br>
+ */
 public class ModifyProductViewController implements Initializable {
 
     private ObservableList<Part> associatedPartsLst = FXCollections.observableArrayList();
@@ -66,7 +69,12 @@ public class ModifyProductViewController implements Initializable {
     private int currentIndex = 0;
 
 
-    // Cancel Button
+    /**
+     * This <b>"toMainFromModifyProduct"</b> method on click of cancel button takes the user
+     * back to the main screen. <br>
+     * @param actionEvent
+     * @throws IOException
+     */
     public void toMainFromModifyProduct(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(MainApplication.class.getResource("/view/mainScreen.fxml"));
         // Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
@@ -79,7 +87,12 @@ public class ModifyProductViewController implements Initializable {
     }
 
 
-    // Sets text to Product Update fields
+    /**
+     * This <b>"sendProduct"</b> method takes the selected product and displays the data in the correct
+     * ext fields on to modify product page. <br>
+     * @param selectedIndex
+     * @param product
+     */
     public void sendProduct(int selectedIndex, Product product) {
 
             currentIndex = selectedIndex;
@@ -97,7 +110,11 @@ public class ModifyProductViewController implements Initializable {
         }
 
 
- // Init and set products and parts tables
+    /**
+     * This <b>"initialize"</b> method initializes the controller and loads selected product and parts to table. <br>
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // on init loads all parts to table - same as main screen
@@ -118,7 +135,10 @@ public class ModifyProductViewController implements Initializable {
     }
 
 
-    // Add part to associated parts list
+    /**
+     * This <b>"addModifiedAssocPart"</b> method on click event adds selected part to associated part list. <br>
+     * @param actionEvent
+     */
     public void addModifiedAssocPart(ActionEvent actionEvent) {
 
         Part selectedPart = (Part) modifyProductPartsTable.getSelectionModel().getSelectedItem();
@@ -128,7 +148,6 @@ public class ModifyProductViewController implements Initializable {
             alert.setTitle("User Error");
             alert.setContentText("You must select a part to add from the list");
             alert.showAndWait();
-       //   return;
         }
         else if (!associatedPartsLst.contains(selectedPart)) {
             associatedPartsLst.add(selectedPart);
@@ -137,6 +156,12 @@ public class ModifyProductViewController implements Initializable {
     }
 
 
+    /**
+     * This <b>"saveModifiedAssocPart"</b> method on click event saves part
+     * and associated parts to table and returns user back to main screen. <br>
+     * @param actionEvent
+     * @throws IOException
+     */
     public void saveModifiedAssocPart(ActionEvent actionEvent) throws IOException {
     try{
         int id = Integer.parseInt(prodModIdLbl.getText());
@@ -186,11 +211,11 @@ public class ModifyProductViewController implements Initializable {
 }
 
 
-
-
-
-//-------------------- working method remove associate part from table---------------------------
-
+    /**
+     * This <b>"toRemoveAssociatedPart"</b> method on click event removes
+     * associated part from associated parts list. <br>
+     * @param actionEvent
+     */
     public void toRemoveAssociatedPart(ActionEvent actionEvent) {
         Part selectedPart = (Part) modAssociatedPartsTable.getSelectionModel().getSelectedItem();
 
@@ -201,7 +226,6 @@ public class ModifyProductViewController implements Initializable {
             alert.showAndWait();
         } else if (associatedPartsLst.contains(selectedPart)) {
             associatedPartsLst.remove(selectedPart);
-           // deleteAssociatedPartTest(selectedPart);
             Alert partDeleteSuccessful = new Alert(Alert.AlertType.INFORMATION);
             partDeleteSuccessful.setTitle("Confirmation Message");
             partDeleteSuccessful.setContentText("The associated part was deleted");
@@ -209,29 +233,12 @@ public class ModifyProductViewController implements Initializable {
             modAssociatedPartsTable.setItems(associatedPartsLst);
         }
     }
-// -------------------- End working method---------------------------
-//
-//
-//
-//
-//
-//
-//
-// use deleteAssociatedPart(selectedAssociatedPart) method in Product
- // ------------------------------------WIP Dependency function---------------------
-//    public void toRemoveAssociatedPart(ActionEvent actionEvent) {
-//        Part selectedAssociatedPart = (Part) modAssociatedPartsTable.getSelectionModel().getSelectedItem();
-//
-//        for(Part part: associatedPartsLst)
-//            if (part == selectedAssociatedPart)
-//
-              //  associatedPartsLst.remove(selectedAssociatedPart);
-//        }
-        //Product.deleteAssociatedPart(selectedAssociatedPart);
-//    }
-// ---------------------------------^End WIP------------------------
 
-
+    /**
+     * This <b>"onModProductPartSearch"</b> method searches by name or id of part
+     * in inventory from user input in search field. <br>
+     * @param actionEvent
+     */
     public void onModProductPartSearch(ActionEvent actionEvent) {
 
         String q = modProductSearch.getText();
@@ -253,7 +260,12 @@ public class ModifyProductViewController implements Initializable {
     }
 
 
-    // Mod Products Parts Search Filter by id
+    /**
+     * This <b>"onModProductsSearchPartsWithID"</b> method searches by id of part
+     * in inventory from user input in search field. <br>
+     * @param id
+     * @return
+     */
     private Part modProductsSearchPartsWithID (int id){
         ObservableList<Part> allParts = Inventory.getAllParts();
         // Enhanced loop option
@@ -266,7 +278,12 @@ public class ModifyProductViewController implements Initializable {
     }
 
 
-    // ModProducts Parts Search Filter Using  Partial Name  with this filter instead
+    /**
+     * This <b>"filter"</b> method searches by name of part
+     * in inventory from user input in search field. <br>
+     * @param partialName
+     * @return
+     */
     private ObservableList<Part> filter (String partialName) {
         ObservableList<Part> namedParts = FXCollections.observableArrayList();
         ObservableList<Part> allParts = Inventory.getAllParts();
@@ -278,7 +295,6 @@ public class ModifyProductViewController implements Initializable {
         }
         return namedParts;
     }
-
 }
 
 

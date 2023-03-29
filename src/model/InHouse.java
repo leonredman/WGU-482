@@ -1,8 +1,12 @@
 package model;
 
-// must use extends Part class for inheritance
+/**
+ * This <b>"InHouse"</b> class is the FXML controller for the inHouse parts. <br>
+ *
+ * <b>MADE RUNTIME ERROR HERE</b> - made mistake here and made static and machine id would not change
+ */
 public class InHouse extends Part {
-// made mistake here and made static and machine id would not change
+    // must use extends Part class for inheritance
      private  int machineId;
 
     // must call super in constructor
@@ -11,12 +15,20 @@ public class InHouse extends Part {
         this.machineId = machineId;
     }
 
-    // setter
+
+    /**
+     * This <b>"setMachineId"</b> method is the setter for the class.
+     * @param machineId
+     */
     public void setMachineId(int machineId) {
         this.machineId = machineId;
     }
 
-    // getter
+
+    /**
+     * This <b>"getMachineId"</b> method is the getter for the class.
+     * @return
+     */
     public  int getMachineId() {
         return machineId;
     }
