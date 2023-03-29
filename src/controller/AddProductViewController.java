@@ -21,6 +21,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+
+/**
+ * This <b>"AddProductViewController"</b> class is the
+ * FXML controller for the add product view.
+ */
 public class AddProductViewController implements Initializable {
 
     // Our list of assoc parts
@@ -66,7 +71,13 @@ public class AddProductViewController implements Initializable {
     private TextField addProductIdField;
 
 
-    // Cancel Button sends back to main
+    /**
+     * This <b>"addProductBackToMain"</b> method on click of the cancel
+     * button takes the user back to main screen.
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void addProdBackToMain(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(MainApplication.class.getResource("/view/mainScreen.fxml"));
         //Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
@@ -78,7 +89,12 @@ public class AddProductViewController implements Initializable {
         stage.show();
     }
 
-    // add product screen search feature event handler
+
+    /**
+     * This <b>"onAddProductSearch"</b> event handler method on enter
+     * executes searches for parts by text or id. <br>
+     * @param actionEvent
+     */
     public void onAddProductSearch(ActionEvent actionEvent) {
         String q = addProductSearch.getText();
 
@@ -99,7 +115,12 @@ public class AddProductViewController implements Initializable {
     }
 
 
-    // AddParts Search Filter by id
+    /**
+     * This <b>"addPartsSearchWithID"</b> method filters parts inventory
+     * by id from user input in search field. <br>
+     * @param id
+     * @return
+     */
     private Part addPartsSearchWithID (int id){
         ObservableList<Part> allParts = Inventory.getAllParts();
         // Enhanced loop option
@@ -112,7 +133,12 @@ public class AddProductViewController implements Initializable {
     }
 
 
-    // AddParts Search Filter Using  Partial Name  with this filter instead
+    /**
+     * This <b>"filter"</b> method searches by string for name of part
+     * in inventory from user input in search field. <br>
+     * @param partialName
+     * @return
+     */
     private ObservableList<Part> filter (String partialName) {
         ObservableList<Part> namedParts = FXCollections.observableArrayList();
         ObservableList<Part> allParts = Inventory.getAllParts();
@@ -126,7 +152,11 @@ public class AddProductViewController implements Initializable {
     }
 
 
-    // btn add Associated part to product list
+    /**
+     * This <b>"onAddProductBtn"</b> method on click event adds product
+     * and associated parts to table. <br>
+     * @param actionEvent
+     */
     public void onAddProductBtn(ActionEvent actionEvent) {
         Part selectedPart = (Part) addProductTable.getSelectionModel().getSelectedItem();
 
@@ -143,7 +173,12 @@ public class AddProductViewController implements Initializable {
     }
 
 
-    // Save Button - Adds Product and goes back to main
+    /**
+     * This <b>"onSaveProductBtn"</b> method on click event saves product
+     * and associated parts to inventory. <br>
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onSaveProductBtn(ActionEvent actionEvent) throws IOException{
         try{
 
@@ -189,6 +224,11 @@ public class AddProductViewController implements Initializable {
     }
 
 
+    /**
+     * This <b>"onRemoveAssociatedPartBtn"</b> method on click event removes
+     * associated part from product list in inventory. <br>
+     * @param actionEvent
+     */
     // Remove Associated part from product list
     public void onRemoveAssociatedPartBtn(ActionEvent actionEvent) {
 
@@ -212,6 +252,11 @@ public class AddProductViewController implements Initializable {
     }
 
 
+    /**
+     * This <b>"initialize"</b> method initializes the controller and loads all parts to table. <br>
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
