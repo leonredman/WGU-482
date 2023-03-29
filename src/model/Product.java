@@ -4,6 +4,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 
+/**
+ * The product class is used to describe products tracked in inventory. <br>
+ */
+
 public class Product {
     private int id;
     private String name;
@@ -26,64 +30,132 @@ public class Product {
         this.min = min;
     }
 
+    /**
+     * This <b>"getId"</b> method is the getter for the class. <br>
+     * @return
+     */
     // Getters and Setters
     public int getId() {
         return id;
     }
 
+
+    /**
+     * This <b>"setId"</b> method is the setter for the class. <br>
+     * @param id
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+
+    /**
+     * This <b>"getName"</b> method is the getter for the class. <br>
+     * @return
+     */
     public String getName() {
         return name;
     }
 
+
+    /**
+     * This <b>"setName"</b> method is the setter for the class. <br>
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+
+    /**
+     * This <b>"getPrice"</b> method is the getter for the class. <br>
+     * @return
+     */
     public double getPrice() {
         return price;
     }
 
+
+    /**
+     * This <b>"setPrice"</b> method is the setter for the class. <br>
+     *
+     * @param price
+     */
     public void setPrice(double price) {
         this.price = price;
     }
 
+
+    /**
+     * This <b>"getStock"</b> method is the getter for the class. <br>
+     * @return
+     */
     public int getStock() {
         return stock;
     }
 
+
+    /**
+     * This <b>"setStock"</b> method is the setter for the class. <br>
+     * @param stock
+     */
     public void setStock(int stock) {
         this.stock = stock;
     }
 
+
+    /**
+     * This <b>"getMin"</b> method is the getter for the class. <br>
+     * @return
+     */
     public int getMin() {
         return min;
     }
 
+
+    /**
+     * This <b>"setMin"</b> method is the setter for the class. <br>
+     * @param min
+     */
     public void setMin(int min) {
         this.min = min;
     }
 
+
+    /**
+     * This <b>"getMax"</b> method is the getter for the class. <br>
+     * @return
+     */
     public int getMax() {
         return max;
     }
 
+
+    /**
+     * This <b>"setMax"</b> method is the setter for the class. <br>
+     * @param max
+     */
     public void setMax(int max) {
         this.max = max;
     }
 
 
+    /**
+     * This <b>"addAssociatedPart"</b> method adds associated part to list. <br>
+     * @param part
+     */
     // adding  a part to the Product list
     public void addAssociatedPart(Part part) {
         associatedParts.add(part);
     }
 
-    //-------------------- unused function---------------------------
-    // deleting a part from the Product list
-    public boolean deleteAssociatedPart(Part selectedAssociatedPart) {
+
+    /**
+     * This <b>"deleteAssociatedPart"</b> method removes associated part to list. <br>
+     * @param selectedAssociatedPart
+     * @return
+     */
+        public boolean deleteAssociatedPart(Part selectedAssociatedPart) {
         associatedParts.remove(selectedAssociatedPart);
 
         Alert partDeleteSuccessful = new Alert(Alert.AlertType.INFORMATION);
@@ -94,42 +166,12 @@ public class Product {
     return true;
    }
 
-//    public boolean deleteAssociatedPartTest (Part selectedAssociatedPart) {
-//        associatedParts.remove(selectedAssociatedPart);
-//        return true;
-//    }
 
 
-   public boolean deleteAssociatedPartDev (Part selectedAssociatedPart){
-        for ( Part part: associatedParts) {
-            if (selectedAssociatedPart == associatedParts) {
-                associatedParts.remove(selectedAssociatedPart);
-            }
-        }
-        return true;
-
-   }
-
-
-//-------------------- end unused function---------------------------
-
-
-    // deleting a part from the Product list
-//    public boolean deleteAssociatedPart(Part selectedAssociatedPart) {
-//
-//// ------------------------- ^WIP--------------------------
-//
-//        associatedParts.remove(selectedAssociatedPart);
-//        Alert partDeleteSuccessful = new Alert(Alert.AlertType.INFORMATION);
-//        partDeleteSuccessful.setTitle("Confirmation Message");
-//        partDeleteSuccessful.setContentText("The part was deleted");
-//        partDeleteSuccessful.showAndWait();
-//
-//        return true;
-//    }
-//
-
-
+    /**
+     * This <b>"getAllAssociatedParts"</b> method gets all associated part from list. <br>
+     * @return
+     */
     // getting "The Associated Parts List" for the Product
     public ObservableList<Part> getAllAssociatedParts() {
         return associatedParts;
