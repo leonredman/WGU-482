@@ -14,6 +14,10 @@ import wgu.inventoryApp.MainApplication;
 
 import java.io.IOException;
 
+
+/**
+ * This <b>"AddPartViewController"</b>class is the FXML controller for the part view.
+ */
 public class AddPartViewController {
     public TextField partPriceTxt;
     @FXML
@@ -36,6 +40,11 @@ public class AddPartViewController {
     private TextField partToggleIdTxt;
 
 
+    /**
+     * This <b>"toMain"</b> method on click takes the user back to the main screen. <br>
+     * @param actionEvent
+     * @throws IOException
+     */
     public void toMain(ActionEvent actionEvent) throws IOException {
 
        Parent root = FXMLLoader.load(MainApplication.class.getResource("/view/mainScreen.fxml"));
@@ -46,14 +55,30 @@ public class AddPartViewController {
        stage.show();
     }
 
+
+    /**
+     * This <b>"onFirst"</b> method on select of radio button changes label text to "Machine Id". <br>
+     * @param actionEvent
+     */
     public void onFirst(ActionEvent actionEvent) {
         addChangeMe.setText("Machine Id");
     }
 
+
+    /**
+     * This <b>"onSecond"</b> method on select of radio button changes label text to "Company Name". <br>
+     * @param actionEvent
+     */
     public void onSecond(ActionEvent actionEvent) {
         addChangeMe.setText("Company Name");
     }
 
+
+    /**
+     * This <b>"onActionSavePart"</b> method on click saves the data from the form input fields to inventory. <br>
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onActionSavePart(ActionEvent actionEvent) throws IOException {
         try {
             int machineId = 0;
@@ -103,5 +128,4 @@ public class AddPartViewController {
             alert.showAndWait();
         }
     }
-
 }
